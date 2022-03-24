@@ -1,4 +1,4 @@
-package com.timelec.timelec.controllers;
+package com.timelec.timelec.controller;
 
 import java.util.HashMap;
 import java.util.HashSet;

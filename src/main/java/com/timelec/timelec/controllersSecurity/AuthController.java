@@ -1,4 +1,4 @@
-package com.timelec.timelec.controllers;
+package com.timelec.timelec.controllersSecurity;
 
 import java.util.HashSet;
 import java.util.List;
