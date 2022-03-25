@@ -3,6 +3,7 @@ package com.timelec.timelec.models;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -68,7 +69,7 @@ public class Summary {
 	private Integer reworkIndex;	
 	
 	
-    @ManyToOne
+    @ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name="Table_mechanical_assembly_ID_mechanical_assembly", nullable=false)
     private MechanicalAssembly mechanicalAssembly;
 
