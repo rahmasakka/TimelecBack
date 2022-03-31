@@ -28,7 +28,7 @@ import com.timelec.timelec.repository.UserRepository;
 
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
-@CrossOrigin()
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -111,7 +111,6 @@ public class UserController {
 
 		user.setRoles(roles);
 		userRepository.save(user);
-
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 	

@@ -14,6 +14,8 @@ import com.timelec.timelec.models.Summary;
 public interface ProductionRepository extends CrudRepository<Summary, Long>{
 
 	List<Summary> findAll();
+	
+	@Query(value="select * FROM test_results_vm.table_summary where Tester_ID = ?1", nativeQuery = true)
 	List<Summary> findByTesterID(Long testerID);
 	//List<Summary> existById(long IdSummary);
 	List<Summary> findByTestStartTime(Timestamp jour);

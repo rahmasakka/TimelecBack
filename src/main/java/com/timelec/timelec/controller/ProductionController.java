@@ -17,8 +17,11 @@ import com.timelec.timelec.repository.ProductionRepository;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/production")
+//@Component
+//@Qualifier("secondDataSource")
 public class ProductionController {
 	
+
 	@Autowired
 	private ProductionRepository productionRepository;
 	
@@ -36,7 +39,9 @@ public class ProductionController {
 	
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 	public List<Summary>getSummaryWithTesterID(@PathVariable Long testerID){
-		return productionRepository.findByTesterID(testerID);
+		List<Summary> listSummaryByTester = productionRepository.findByTesterID(testerID);
+		System.out.println("count(*) du testerID "+testerID+" = " + listSummaryByTester.size());
+		return listSummaryByTester;
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}", method = RequestMethod.GET)
@@ -59,22 +64,22 @@ public class ProductionController {
 	public Integer calculNbSecondFinDebut(@PathVariable Date jour, @PathVariable Long testerID) {
 		List<Time> Result = calculeSecond(jour, testerID );
 		System.out.println("nb de ligne (count(*)) "+ Result.size());
-		int debut = (int) Result.get(0).getTime();
-		int fin =  (int) Result.get(Result.size()-1).getTime();
-		int difference = fin - debut;
+		int debut = (int) (Result.get(0).getTime() / 1000); //nb seconde
+		int fin =  (int) (Result.get(Result.size()-1).getTime() / 1000); //nb seconde
+		int difference = fin - debut; //nb seconde
 
-		System.out.println("debut "+ debut );
-		System.out.println("fin "+ fin );
-		System.out.println("difference "+ difference );
+		System.out.println("debut en seconde: "+ debut );
+		System.out.println("fin en seconde: "+ fin );
+		System.out.println("difference en seconde: "+ difference );
 
-		int nb_heure = difference / (60*60*1000);
-		difference = difference - (nb_heure * 60 *60 *1000) ;
-		int nb_minute = difference / (60*1000);
-		difference = difference - (nb_minute * 60 * 1000);		
-		int nb_seconde = difference / 1000;
-		System.out.println(nb_heure+":"+nb_minute+":"+ nb_seconde );
-		return (fin - debut) /1000;
+		int nb_heure = difference / (60*60);
+		difference = difference - (nb_heure * 60 *60) ;
+		int nb_minute = difference / (60);
+		difference = difference - (nb_minute * 60);		
+		System.out.println(nb_heure + ":" + nb_minute + ":" + difference );
+		return fin - debut;
 	}
+	
 		
 	@RequestMapping(value="/nbSecondParJour/{jour}/testerID/{testerID}/nbMinute/{nbMinute}")
 	public int calculNbSecond(@PathVariable Date jour, @PathVariable Long testerID, @PathVariable int nbMinute) {
@@ -84,7 +89,7 @@ public class ProductionController {
 		for (int i = 1; i<result.size(); i++) {
 			int difference = (int) (result.get(i).getTime() - result.get(i-1).getTime()); // difference en milliseconde
 			difference /= 1000;  // difference en seconde  
-			if (difference > (nbMinute * 60)) { // nbMinutes en nb seconde 
+			if (difference > (nbMinute * 60)) { // nbMinutes en seconde 
             	System.out.println ("ligne " + i +" ==> " + difference );
             	if (productionRepository.exist(summaries.get(i).getIdSummary())== 0) {
             	productionRepository.insert(summaries.get(i).getIdSummary(),
@@ -98,6 +103,6 @@ public class ProductionController {
 		}
 		System.out.println ("nb se seconde du "+jour+ " pour le testeur "+ testerID + " est: "+  somme);
 		System.out.println ("il y a  " + result.size() + " lignes ");
-		return  somme;
+		return somme;
 	}
 }
