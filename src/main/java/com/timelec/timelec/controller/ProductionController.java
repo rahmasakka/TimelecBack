@@ -18,24 +18,23 @@ import com.timelec.timelec.repository.ProductionRepository;
 @RestController
 @RequestMapping("/api/production")
 //@Component
-//@Qualifier("secondDataSource")
 public class ProductionController {
 	
-
-	@Autowired
+	@Autowired	
 	private ProductionRepository productionRepository;
-	
+
 	@GetMapping("/all")
 	public List<Summary> listSummary(){
 		return this.productionRepository.findAll();
 	}
-	
+
 	@GetMapping("/{id}")
 	public Summary getProductionById(@PathVariable Long id) {
 		Summary prod = productionRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("summary not exist with id:" + id));
 		return prod;
 	}
+	
 	
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 	public List<Summary>getSummaryWithTesterID(@PathVariable Long testerID){
@@ -46,12 +45,13 @@ public class ProductionController {
 	
 	@RequestMapping(value="/testStartTime/{jour}", method = RequestMethod.GET)
 	public List<Summary>getSummaryByStartTime(@PathVariable Date jour){
-		System.out.print("nb de ligne" + productionRepository.findByDate(jour).size());
+		System.out.println("nb de ligne: " + productionRepository.findByDate(jour).size());
 		return productionRepository.findByDate(jour);
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}/testerID/{testerID}", method = RequestMethod.GET)
 	public List<Summary>getSummaryByTesterStartTime(@PathVariable Date jour, @PathVariable Long testerID){
+		System.out.println("nb de ligne: "+ productionRepository.findByDateTesterID(jour, testerID).size());
 		return productionRepository.findByDateTesterID(jour, testerID);
 	}
 	

@@ -9,12 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "table_summary")
-//@Component
-//@Qualifier("secondDataSource")
+@Component
 public class Summary {
 	
 	@Id

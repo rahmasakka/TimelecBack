@@ -31,7 +31,6 @@ public class LoadChargeController {
 		return loadChargeRepository.findAll();
 	}
 	
-	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public LoadCharge getCCById(@PathVariable int id) {
 		LoadCharge loadCharge = loadChargeRepository.findById(id).

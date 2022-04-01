@@ -27,6 +27,7 @@ public class MachineController {
 	@Autowired
 	MachineRepository machineRepository;
 	
+	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public List<Machine>getAllMachines(){
 		return machineRepository.findAll();
@@ -58,7 +59,6 @@ public class MachineController {
 		
 		Machine machineUpdate = machineRepository.save(machine1);
 		return ResponseEntity.ok(machineUpdate);
-		
 	}
 	
 	
@@ -71,5 +71,4 @@ public class MachineController {
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
-	
 }
