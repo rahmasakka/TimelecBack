@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,20 +15,23 @@ import com.timelec.timelec.exception.ResourceNotFoundException;
 import com.timelec.timelec.models.Summary;
 import com.timelec.timelec.repository.ProductionRepository;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/production")
-//@Component
+
 public class ProductionController {
 	
-	@Autowired	
-	private ProductionRepository productionRepository;
+    @Autowired
+    private ProductionRepository productionRepository;
 
 	@GetMapping("/all")
 	public List<Summary> listSummary(){
 		return this.productionRepository.findAll();
 	}
 
+   // @Transactional
+	@Qualifier("productEntityManagerFactory") 
 	@GetMapping("/{id}")
 	public Summary getProductionById(@PathVariable Long id) {
 		Summary prod = productionRepository.findById(id).

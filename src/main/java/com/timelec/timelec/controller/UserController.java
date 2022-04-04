@@ -33,13 +33,13 @@ import com.timelec.timelec.repository.UserRepository;
 @RequestMapping("/api/users")
 public class UserController {
 	
-	@Autowired
+    @Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
+    @Autowired
 	private RoleRepository roleRepository;	
 	
-	@Autowired
+    @Autowired
 	PasswordEncoder encoder;
 	
 	@GetMapping("/all")

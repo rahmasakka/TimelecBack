@@ -22,7 +22,7 @@
 //@EnableJpaRepositories(
 //		entityManagerFactoryRef = "userEntityManagerFactory", 
 //		transactionManagerRef = "userTransactionManager", 
-//		basePackages = {"com.timelec.timelec.repository.application" })
+//		basePackages = {"com.timelec.timelec.repository" })
 //public class WebConfig {
 //
 //	@Bean(name = "userDataSource")

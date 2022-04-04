@@ -63,8 +63,6 @@ public class LoadChargeController {
 		cc.setCCName(loadChargeDetails.getCCName());
 		cc.setUap(loadChargeDetails.getUap());		
 		LoadCharge updateCC = loadChargeRepository.save(cc);
-		return ResponseEntity.ok(updateCC);
-		
-	}
-	
+		return ResponseEntity.ok(updateCC);	
+	}	
 }

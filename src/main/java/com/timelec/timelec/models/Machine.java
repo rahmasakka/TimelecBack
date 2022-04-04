@@ -7,6 +7,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +31,12 @@ public class Machine {
 	@Column(name="Machine_category", length = 20)
 	private MachineCategory MachineCategory;
 
+	
+    @ManyToOne
+    @JoinColumn(name="Laod_Charge_Id", nullable=false)
+    private LoadCharge centreCharge;
 
+    
 	public int getIdMachine() {
 		return IdMachine;
 	}
