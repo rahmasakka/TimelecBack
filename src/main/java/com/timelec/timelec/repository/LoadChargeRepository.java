@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.timelec.testResultVm.models.Summary;
 import com.timelec.timelec.models.LoadCharge;
-import com.timelec.timelec.models.Summary;
 
 
 @Repository

@@ -1,4 +1,4 @@
-package com.timelec.timelec.models;
+package com.timelec.testResultVm.models;
 
 import java.sql.Timestamp;
 import javax.persistence.Column;

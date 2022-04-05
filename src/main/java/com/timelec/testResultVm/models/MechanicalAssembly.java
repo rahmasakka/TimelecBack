@@ -1,4 +1,4 @@
-package com.timelec.timelec.models;
+package com.timelec.testResultVm.models;
 
 import java.sql.Time;
 import java.sql.Timestamp;

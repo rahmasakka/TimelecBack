@@ -1,4 +1,4 @@
-package com.timelec.timelec.repository;
+package com.timelec.testResultVm.repository;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.timelec.timelec.models.MechanicalAssembly;
-import com.timelec.timelec.models.Summary;
+import com.timelec.testResultVm.models.MechanicalAssembly;
+import com.timelec.testResultVm.models.Summary;
 
 @Repository
 

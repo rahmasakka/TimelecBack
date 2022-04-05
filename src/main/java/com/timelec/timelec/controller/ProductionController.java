@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.timelec.testResultVm.models.Summary;
+import com.timelec.testResultVm.repository.ProductionRepository;
 import com.timelec.timelec.exception.ResourceNotFoundException;
-import com.timelec.timelec.models.Summary;
-import com.timelec.timelec.repository.ProductionRepository;
 
 
 @CrossOrigin
