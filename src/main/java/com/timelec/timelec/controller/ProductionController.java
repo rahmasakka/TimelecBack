@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,15 +30,12 @@ public class ProductionController {
 		return this.productionRepository.findAll();
 	}
 
-   // @Transactional
-	@Qualifier("productEntityManagerFactory") 
 	@GetMapping("/{id}")
 	public Summary getProductionById(@PathVariable Long id) {
 		Summary prod = productionRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("summary not exist with id:" + id));
 		return prod;
 	}
-	
 	
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 	public List<Summary>getSummaryWithTesterID(@PathVariable Long testerID){
@@ -86,28 +82,30 @@ public class ProductionController {
 	}
 	
 		
-	@RequestMapping(value="/nbSecondParJour/{jour}/testerID/{testerID}/nbMinute/{nbMinute}")
-	public int calculNbSecond(@PathVariable Date jour, @PathVariable Long testerID, @PathVariable int nbMinute) {
-		List<Time> result = calculeSecond(jour, testerID );
-		List<Summary> summaries= productionRepository.findByDateTesterID(jour, testerID);
-		int somme = 0;
-		for (int i = 1; i<result.size(); i++) {
-			int difference = (int) (result.get(i).getTime() - result.get(i-1).getTime()); // difference en milliseconde
-			difference /= 1000;  // difference en seconde  
-			if (difference > (nbMinute * 60)) { // nbMinutes en seconde 
-            	System.out.println ("ligne " + i +" ==> " + difference );
-            	if (productionRepository.exist(summaries.get(i).getIdSummary())== 0) {
-            	productionRepository.insert(summaries.get(i).getIdSummary(),
-            								summaries.get(i).getTestStartTime(),
-            								summaries.get(i).getTesterID(),
-            								summaries.get(i).getMechanicalAssembly());
-            	}
-            }	
-		// 	System.out.println (" ==> " +difference);
-            somme += difference;
-		}
-		System.out.println ("nb se seconde du "+jour+ " pour le testeur "+ testerID + " est: "+  somme);
-		System.out.println ("il y a  " + result.size() + " lignes ");
-		return somme;
-	}
+//	@RequestMapping(value="/nbSecondParJour/{jour}/testerID/{testerID}/nbMinute/{nbMinute}")
+//	public int calculNbSecond(@PathVariable Date jour, @PathVariable Long testerID, @PathVariable int nbMinute) {
+//		List<Time> result = calculeSecond(jour, testerID );
+//		List<Summary> summaries= productionRepository.findByDateTesterID(jour, testerID);
+//		int somme = 0;
+//		for (int i = 1; i<result.size(); i++) {
+//			int difference = (int) (result.get(i).getTime() - result.get(i-1).getTime()); // difference en milliseconde
+//			difference /= 1000;  // difference en seconde  
+//			if (difference > (nbMinute * 60)) { // nbMinutes en seconde 
+//            	System.out.println ("ligne " + i +" ==> " + difference );
+//            	if (testeurEnReposRepository.exist(summaries.get(i).getIdSummary())== 0) {
+//            		System.out.print("hellooooo");
+//            		testeurEnReposRepository.insert(
+//						summaries.get(i).getIdSummary(),
+//						summaries.get(i).getTestStartTime(),
+//						summaries.get(i).getTesterID(),
+//						summaries.get(i).getMechanicalAssembly());
+//            	}
+//            }	
+//		// 	System.out.println (" ==> " +difference);
+//            somme += difference;
+//		}
+//		System.out.println ("nb se seconde du "+jour+ " pour le testeur "+ testerID + " est: "+  somme);
+//		System.out.println ("il y a  " + result.size() + " lignes ");
+//		return somme;
+//	}
 }

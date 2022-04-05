@@ -18,26 +18,26 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-	entityManagerFactoryRef = "ancienEntityManagerFactory",
-    transactionManagerRef = "ancienTransactionManager", 
+	entityManagerFactoryRef = "testResultVMEntityManagerFactory",
+    transactionManagerRef = "testResultVMTransactionManager", 
     basePackages = {"com.timelec.testResultVm.repository"})
 
 
 public class TestResultVmDBConfig {
-	@Bean(name = "ancienDataSource")
-	@ConfigurationProperties(prefix = "ancien.datasource")
+	@Bean(name = "testResultVMDataSource")
+	@ConfigurationProperties(prefix = "testresultvm.datasource")
 	public DataSource dataSource() {
 		return DataSourceBuilder.create().build();
 	}
 	
-	@Bean(name = "ancienEntityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean ancienEntityManagerFactory(EntityManagerFactoryBuilder builder, 
-																			@Qualifier("ancienDataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource).packages("com.timelec.testResultVm.models").persistenceUnit("ancien").build();
+	@Bean(name = "testResultVMEntityManagerFactory")
+	public LocalContainerEntityManagerFactoryBean testResultVMEntityManagerFactory(EntityManagerFactoryBuilder builder, 
+																			@Qualifier("testResultVMDataSource") DataSource dataSource) {
+		return builder.dataSource(dataSource).packages("com.timelec.testResultVm.models").persistenceUnit("testResultVM").build();
 	}
 	
-	@Bean(name = "ancienTransactionManager")
-	public PlatformTransactionManager ancienTransactionManager(@Qualifier("ancienEntityManagerFactory") EntityManagerFactory ancienEntityManagerFactory) {
-		return new JpaTransactionManager(ancienEntityManagerFactory);
+	@Bean(name = "testResultVMTransactionManager")
+	public PlatformTransactionManager testResultVMTransactionManager(@Qualifier("testResultVMEntityManagerFactory") EntityManagerFactory testResultVMEntityManagerFactory) {
+		return new JpaTransactionManager(testResultVMEntityManagerFactory);
 	}
 }

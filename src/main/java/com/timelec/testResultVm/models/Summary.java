@@ -219,5 +219,5 @@ public class Summary {
 	public Summary() {
 		super();
 	}
-    
+
 }

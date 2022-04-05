@@ -13,9 +13,7 @@ import com.timelec.timelec.repository.UserRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
-	@Autowired(required = false)
-
-
+	@Autowired
 	UserRepository userRepository;
 
 	@Override
