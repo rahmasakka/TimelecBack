@@ -135,6 +135,5 @@ public class UserController {
 	@RequestMapping(value = "/roles/all", method = RequestMethod.GET)
 	public List<Role>getAllRoles(){
 		return roleRepository.findAll();
-	}	
-	
+	}		
 }

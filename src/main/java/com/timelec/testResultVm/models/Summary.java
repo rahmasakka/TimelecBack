@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -213,8 +212,6 @@ public class Summary {
 		this.reworkIndex = reworkIndex;
 		this.mechanicalAssembly = mechanicalAssembly;
 	}
-
-
 	
 	public Summary() {
 		super();

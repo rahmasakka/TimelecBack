@@ -73,6 +73,5 @@ public class UAPController {
 	@RequestMapping(value="/listMachineByUAP/{IdUAP}",  method = RequestMethod.GET)
 	public List<UAP> listMachineByUAP(@PathVariable int IdUAP) {
 		return uapRepository.listMachineByUAP(IdUAP);
-	}
-	
+	}	
 }

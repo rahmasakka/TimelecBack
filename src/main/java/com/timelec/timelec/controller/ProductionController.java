@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.timelec.testResultVm.models.Summary;
 import com.timelec.testResultVm.repository.ProductionRepository;
 import com.timelec.timelec.exception.ResourceNotFoundException;
@@ -24,7 +23,7 @@ public class ProductionController {
 	
     @Autowired
     private ProductionRepository productionRepository;
-
+ 
 	@GetMapping("/all")
 	public List<Summary> listSummary(){
 		return this.productionRepository.findAll();
@@ -67,7 +66,7 @@ public class ProductionController {
 		System.out.println("nb de ligne (count(*)) "+ Result.size());
 		int debut = (int) (Result.get(0).getTime() / 1000); //nb seconde
 		int fin =  (int) (Result.get(Result.size()-1).getTime() / 1000); //nb seconde
-		int difference = fin - debut; //nb seconde
+		int difference = fin - debut;
 
 		System.out.println("debut en seconde: "+ debut );
 		System.out.println("fin en seconde: "+ fin );
@@ -80,32 +79,4 @@ public class ProductionController {
 		System.out.println(nb_heure + ":" + nb_minute + ":" + difference );
 		return fin - debut;
 	}
-	
-		
-//	@RequestMapping(value="/nbSecondParJour/{jour}/testerID/{testerID}/nbMinute/{nbMinute}")
-//	public int calculNbSecond(@PathVariable Date jour, @PathVariable Long testerID, @PathVariable int nbMinute) {
-//		List<Time> result = calculeSecond(jour, testerID );
-//		List<Summary> summaries= productionRepository.findByDateTesterID(jour, testerID);
-//		int somme = 0;
-//		for (int i = 1; i<result.size(); i++) {
-//			int difference = (int) (result.get(i).getTime() - result.get(i-1).getTime()); // difference en milliseconde
-//			difference /= 1000;  // difference en seconde  
-//			if (difference > (nbMinute * 60)) { // nbMinutes en seconde 
-//            	System.out.println ("ligne " + i +" ==> " + difference );
-//            	if (testeurEnReposRepository.exist(summaries.get(i).getIdSummary())== 0) {
-//            		System.out.print("hellooooo");
-//            		testeurEnReposRepository.insert(
-//						summaries.get(i).getIdSummary(),
-//						summaries.get(i).getTestStartTime(),
-//						summaries.get(i).getTesterID(),
-//						summaries.get(i).getMechanicalAssembly());
-//            	}
-//            }	
-//		// 	System.out.println (" ==> " +difference);
-//            somme += difference;
-//		}
-//		System.out.println ("nb se seconde du "+jour+ " pour le testeur "+ testerID + " est: "+  somme);
-//		System.out.println ("il y a  " + result.size() + " lignes ");
-//		return somme;
-//	}
 }
