@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.exception.ResourceNotFoundException;
+import com.timelec.timelec.models.LoadCharge;
 import com.timelec.timelec.models.Machine;
 import com.timelec.timelec.repository.MachineRepository;
 
@@ -70,5 +71,11 @@ public class MachineController {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
+	}
+	
+	
+	@RequestMapping(value = "/listMachineByCC/{id}", method = RequestMethod.GET)
+	public List<Machine>listMachineByCC(@PathVariable LoadCharge id){
+		return machineRepository.listMachineByCC(id);
 	}
 }

@@ -18,77 +18,88 @@ public class Machine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID_Machine")
-	private int IdMachine;
+	private int idMachine;
 	
 	@Column(name="machine_name")
-	private String MachineName;
+	private String machineName;
 	
 	@Column(name="Machine_description")
-	private String MachineDescription;	
+	private String machineDescription;	
 	
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="Machine_category", length = 20)
-	private MachineCategory MachineCategory;
+	private MachineCategory machineCategory;
 
 	
     @ManyToOne
-    @JoinColumn(name="Laod_Charge_Id", nullable=false)
-    private LoadCharge centreCharge;
+    @JoinColumn(name="ID_CC", nullable=false)
+    private LoadCharge loadCharge;
 
     
 	public int getIdMachine() {
-		return IdMachine;
+		return idMachine;
 	}
 
 
 	public String getMachineName() {
-		return MachineName;
+		return machineName;
 	}
 
 
 	public String getMachineDescription() {
-		return MachineDescription;
+		return machineDescription;
 	}
 
 
 	public MachineCategory getMachineCategory() {
-		return MachineCategory;
+		return machineCategory;
 	}
 
 
 	public void setIdMachine(int idMachine) {
-		IdMachine = idMachine;
+		this.idMachine = idMachine;
 	}
 
 
 	public void setMachineName(String machineName) {
-		MachineName = machineName;
+		this.machineName = machineName;
 	}
 
 
 	public void setMachineDescription(String machineDescription) {
-		MachineDescription = machineDescription;
+		this.machineDescription = machineDescription;
 	}
 
 
 	public void setMachineCategory(MachineCategory machineCategory) {
-		MachineCategory = machineCategory;
+		this.machineCategory = machineCategory;
+	}
+
+	
+	public LoadCharge getCentreCharge() {
+		return loadCharge;
 	}
 
 
-	public Machine(int idMachine, String machineName, String machineDescription,
-			com.timelec.timelec.models.MachineCategory machineCategory) {
-		super();
-		IdMachine = idMachine;
-		MachineName = machineName;
-		MachineDescription = machineDescription;
-		MachineCategory = machineCategory;
+	public void setCentreCharge(LoadCharge loadCharge) {
+		this.loadCharge = loadCharge;
 	}
-	
-	
+
+
 	public Machine() {
 		super();
+	}
+
+
+	public Machine(int idMachine, String machineName, String machineDescription, MachineCategory machineCategory,
+			LoadCharge loadCharge) {
+		super();
+		this.idMachine = idMachine;
+		this.machineName = machineName;
+		this.machineDescription = machineDescription;
+		this.machineCategory = machineCategory;
+		this.loadCharge = loadCharge;
 	}
 	
 }

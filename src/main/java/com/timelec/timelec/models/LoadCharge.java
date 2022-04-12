@@ -25,7 +25,7 @@ public class LoadCharge {
 	@Column(name="CC_description")
 	private String CCDescription;
 	
-    @ManyToOne
+	@ManyToOne
     @JoinColumn(name="UAP_ID", nullable=false)
     private UAP uap;
 
@@ -73,6 +73,4 @@ public class LoadCharge {
 	public LoadCharge() {
 		super();
 	}
-    
-	
 }

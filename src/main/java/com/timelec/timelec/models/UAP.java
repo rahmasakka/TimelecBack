@@ -15,7 +15,7 @@ public class UAP {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_UAP")
+	@Column(name="UAP_ID")
 	private int IdUAP;
 	
     @NotEmpty(message = "Name may not be empty")

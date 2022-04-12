@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.exception.ResourceNotFoundException;
 import com.timelec.timelec.models.LoadCharge;
+import com.timelec.timelec.models.UAP;
 import com.timelec.timelec.repository.LoadChargeRepository;
 
 @CrossOrigin
@@ -64,5 +65,10 @@ public class LoadChargeController {
 		cc.setUap(loadChargeDetails.getUap());		
 		LoadCharge updateCC = loadChargeRepository.save(cc);
 		return ResponseEntity.ok(updateCC);	
+	}		
+	
+	@RequestMapping(value="/listCCByUAP/{IdUAP}",  method = RequestMethod.GET)
+	public List<LoadCharge> listCCByUAP(@PathVariable UAP IdUAP) {
+		return loadChargeRepository.listCCByUAP(IdUAP);
 	}	
 }
