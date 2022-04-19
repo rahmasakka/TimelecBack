@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.exception.ResourceNotFoundException;
-import com.timelec.timelec.models.LoadCharge;
+import com.timelec.timelec.models.CentreCharge;
 import com.timelec.timelec.models.Machine;
 import com.timelec.timelec.repository.MachineRepository;
 
@@ -54,7 +54,7 @@ public class MachineController {
 	public ResponseEntity<Machine> updateMachine(@PathVariable int id, @RequestBody Machine machine){
 		Machine machine1 = machineRepository.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("Machine not exit with id:" + id));
-		machine1.setMachineCategory(machine.getMachineCategory());
+		//machine1.setMachineCategory(machine.getMachineCategory());
 		machine1.setMachineDescription(machine.getMachineDescription());
 		machine1.setMachineName(machine.getMachineName());
 		
@@ -75,7 +75,7 @@ public class MachineController {
 	
 	
 	@RequestMapping(value = "/listMachineByCC/{id}", method = RequestMethod.GET)
-	public List<Machine>listMachineByCC(@PathVariable LoadCharge id){
+	public List<Machine>listMachineByCC(@PathVariable CentreCharge id){
 		return machineRepository.listMachineByCC(id);
 	}
 }

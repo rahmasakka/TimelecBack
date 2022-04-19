@@ -2,8 +2,6 @@ package com.timelec.timelec.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,15 +24,15 @@ public class Machine {
 	@Column(name="Machine_description")
 	private String machineDescription;	
 	
-	
+	/*
 	@Enumerated(EnumType.STRING)
 	@Column(name="Machine_category", length = 20)
 	private MachineCategory machineCategory;
-
+*/
 	
     @ManyToOne
-    @JoinColumn(name="ID_CC", nullable=false)
-    private LoadCharge loadCharge;
+    @JoinColumn(name="ID_CC")
+    private CentreCharge centreCharge;
 
     
 	public int getIdMachine() {
@@ -50,12 +48,12 @@ public class Machine {
 	public String getMachineDescription() {
 		return machineDescription;
 	}
-
+/*
 
 	public MachineCategory getMachineCategory() {
 		return machineCategory;
 	}
-
+*/
 
 	public void setIdMachine(int idMachine) {
 		this.idMachine = idMachine;
@@ -70,20 +68,20 @@ public class Machine {
 	public void setMachineDescription(String machineDescription) {
 		this.machineDescription = machineDescription;
 	}
-
+/*
 
 	public void setMachineCategory(MachineCategory machineCategory) {
 		this.machineCategory = machineCategory;
 	}
-
+*/
 	
-	public LoadCharge getCentreCharge() {
-		return loadCharge;
+	public CentreCharge getCentreCharge() {
+		return centreCharge;
 	}
 
 
-	public void setCentreCharge(LoadCharge loadCharge) {
-		this.loadCharge = loadCharge;
+	public void setCentreCharge(CentreCharge centreCharge) {
+		this.centreCharge = centreCharge;
 	}
 
 
@@ -93,13 +91,13 @@ public class Machine {
 
 
 	public Machine(int idMachine, String machineName, String machineDescription, MachineCategory machineCategory,
-			LoadCharge loadCharge) {
+			CentreCharge centreCharge) {
 		super();
 		this.idMachine = idMachine;
 		this.machineName = machineName;
 		this.machineDescription = machineDescription;
-		this.machineCategory = machineCategory;
-		this.loadCharge = loadCharge;
+		//this.machineCategory = machineCategory;
+		this.centreCharge = centreCharge;
 	}
 	
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Centre_Charge")
-public class LoadCharge {
+public class CentreCharge {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class LoadCharge {
 	private String CCDescription;
 	
 	@ManyToOne
-    @JoinColumn(name="UAP_ID", nullable=false)
+    @JoinColumn(name="UAP_ID")
     private UAP uap;
 
 	public int getIdCC() {
@@ -49,28 +49,34 @@ public class LoadCharge {
 		IdCC = idCC;
 	}
 
-	public void setCCName(String cCName) {
-		CCName = cCName;
+	public void setCCName(String CCName) {
+		this.CCName = CCName;
 	}
 
-	public void setCCDescription(String cCDescription) {
-		CCDescription = cCDescription;
+	public void setCCDescription(String CCDescription) {
+		this.CCDescription = CCDescription;
 	}
 
 	public void setUap(UAP uap) {
 		this.uap = uap;
 	}
 
-	public LoadCharge(int idCC, String cCName, String cCDescription, UAP uap) {
+	public CentreCharge(int idCC, String CCName, String CCDescription, UAP uap) {
 		super();
 		IdCC = idCC;
-		CCName = cCName;
-		CCDescription = cCDescription;
+		this.CCName = CCName;
+		this.CCDescription = CCDescription;
 		this.uap = uap;
 	}
     
     
-	public LoadCharge() {
+	public CentreCharge() {
 		super();
 	}
+
+	@Override
+	public String toString() {
+		return "CentreCharge [IdCC=" + IdCC + ", CCName=" + CCName + ", CCDescription=" + CCDescription + ", uap=" + uap + "]";
+	}
+	
 }
