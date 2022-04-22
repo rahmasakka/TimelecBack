@@ -29,4 +29,16 @@ public interface ProductionRepository extends CrudRepository<Summary, Long>{
 	@Query(value="select Convert(Test_start_time, time) "
 			   + "from test_results_vm.table_summary where Tester_ID = ?2 and Convert(Test_start_time, date) = ?1", nativeQuery = true)
 	public List<Time> calculeSecond(Date jour, Long testerID);
+	
+
+	@Query(value="select *" + 
+			"	from test_results_vm.table_summary" + 
+			"	where Convert(Test_start_time, date) >= ?1 and Convert(Test_start_time, date) <= ?2", nativeQuery = true)
+	public List<Summary> listSummaryBetweenTwoDays(Date jour1, Date jour2);
+	
+	
+	@Query(value="select *" + 
+			"	from test_results_vm.table_summary" + 
+			"	where Convert(Test_start_time, date) >= ?1 and Convert(Test_start_time, date) <= ?2 and Tester_ID = ?3 ", nativeQuery = true)
+	public List<Summary> listSummaryBetweenTwoDaysByTesterID(Date jour1, Date jour2, Long testerID);
 }

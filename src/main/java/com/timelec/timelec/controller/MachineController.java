@@ -57,9 +57,34 @@ public class MachineController {
 		//machine1.setMachineCategory(machine.getMachineCategory());
 		machine1.setMachineDescription(machine.getMachineDescription());
 		machine1.setMachineName(machine.getMachineName());
-		
+		machine1.setReference(machine.getReference());
 		Machine machineUpdate = machineRepository.save(machine1);
 		return ResponseEntity.ok(machineUpdate);
+	}
+	
+	
+	//modifier l'etat de la machine (par reference)
+	@RequestMapping(value="/updateReference/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Machine> updateReferenceMachine(@PathVariable int id){
+		Machine machine1 = machineRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Machine not exit with id:" + id));
+		machine1.setReference(!machine1.getReference());
+		Machine machineUpdate = machineRepository.save(machine1);
+		return ResponseEntity.ok(machineUpdate);
+	}
+	
+	//selectionner la machine réferencée par centre de charge 
+	@RequestMapping(value="/referenced/{centreChargeId}", method = RequestMethod.GET)
+	public Machine machineReferencedToCentreCharge(@PathVariable int centreChargeId){
+		Machine machineReference= machineRepository.machineReferencedToCentreCharge(centreChargeId) ;
+		return machineReference;
+	}
+
+	
+	//selectionner la liste des machines par centre de charge 
+	@RequestMapping(value = "/listMachineByCC/{id}", method = RequestMethod.GET)
+	public List<Machine>listMachineByCC(@PathVariable CentreCharge id){
+		return machineRepository.listMachineByCC(id);
 	}
 	
 	
@@ -73,9 +98,4 @@ public class MachineController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
-	@RequestMapping(value = "/listMachineByCC/{id}", method = RequestMethod.GET)
-	public List<Machine>listMachineByCC(@PathVariable CentreCharge id){
-		return machineRepository.listMachineByCC(id);
-	}
 }

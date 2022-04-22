@@ -30,6 +30,9 @@ public class Machine {
 	private MachineCategory machineCategory;
 */
 	
+	@Column(name="reference")
+	private Boolean reference;
+	
     @ManyToOne
     @JoinColumn(name="ID_CC")
     private CentreCharge centreCharge;
@@ -85,18 +88,28 @@ public class Machine {
 	}
 
 
+	public Boolean getReference() {
+		return reference;
+	}
+
+
+	public void setReference(Boolean reference) {
+		this.reference = reference;
+	}
+
+
 	public Machine() {
 		super();
 	}
 
 
-	public Machine(int idMachine, String machineName, String machineDescription, MachineCategory machineCategory,
+	public Machine(int idMachine, String machineName, String machineDescription, Boolean reference,
 			CentreCharge centreCharge) {
 		super();
 		this.idMachine = idMachine;
 		this.machineName = machineName;
 		this.machineDescription = machineDescription;
-		//this.machineCategory = machineCategory;
+		this.reference = reference;
 		this.centreCharge = centreCharge;
 	}
 	

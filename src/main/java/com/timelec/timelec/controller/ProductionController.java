@@ -67,11 +67,11 @@ public class ProductionController {
 		int debut = (int) (Result.get(0).getTime() / 1000); //nb seconde
 		int fin =  (int) (Result.get(Result.size()-1).getTime() / 1000); //nb seconde
 		int difference = fin - debut;
-
+/*
 		System.out.println("debut en seconde: "+ debut );
 		System.out.println("fin en seconde: "+ fin );
 		System.out.println("difference en seconde: "+ difference );
-
+*/
 		int nb_heure = difference / (60*60);
 		difference = difference - (nb_heure * 60 *60) ;
 		int nb_minute = difference / (60);
@@ -79,4 +79,16 @@ public class ProductionController {
 		System.out.println(nb_heure + ":" + nb_minute + ":" + difference );
 		return fin - debut;
 	}
+	
+	@RequestMapping(value="/{jour1}/{jour2}", method = RequestMethod.GET)
+	public List<Summary>listSummaryBetweenTwoDays(@PathVariable Date jour1, @PathVariable Date jour2){
+		return productionRepository.listSummaryBetweenTwoDays(jour1, jour2);
+	}
+	
+	
+	@RequestMapping(value="/{jour1}/{jour2}/{testerID}", method = RequestMethod.GET)
+	public List<Summary>listSummaryBetweenTwoDaysByTesterID(@PathVariable Date jour1, @PathVariable Date jour2, @PathVariable Long testerID){
+		return productionRepository.listSummaryBetweenTwoDaysByTesterID(jour1, jour2, testerID);
+	}
+	
 }

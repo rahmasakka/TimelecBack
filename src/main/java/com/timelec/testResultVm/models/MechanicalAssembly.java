@@ -22,7 +22,7 @@ public class MechanicalAssembly {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID_mechanical_assembly")
-	private long IdMechanicalAssembly;
+	private long idMechanicalAssembly;
 	
 	@NotBlank
 	@Column(name="Serial_No", length = 20)
@@ -70,7 +70,7 @@ public class MechanicalAssembly {
 
 
 	public long getIdMechanicalAssembly() {
-		return IdMechanicalAssembly;
+		return idMechanicalAssembly;
 	}
 
 
@@ -130,7 +130,7 @@ public class MechanicalAssembly {
 
 
 	public void setIdMechanicalAssembly(long idMechanicalAssembly) {
-		IdMechanicalAssembly = idMechanicalAssembly;
+		this.idMechanicalAssembly = idMechanicalAssembly;
 	}
 
 
@@ -193,7 +193,7 @@ public class MechanicalAssembly {
 			String productName, Timestamp maDate, Time maStartTime, String manufactoringOrder, Boolean packingStatus,
 			int nbReworks, String packingOperator, int nbRepacks) {
 		super();
-		IdMechanicalAssembly = idMechanicalAssembly;
+		this.idMechanicalAssembly = idMechanicalAssembly;
 		this.serialNo = serialNo;
 		this.partNo = partNo;
 		this.revision = revision;
