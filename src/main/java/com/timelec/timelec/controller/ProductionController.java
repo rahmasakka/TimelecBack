@@ -4,15 +4,18 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.timelec.testResultVm.models.Summary;
 import com.timelec.testResultVm.repository.ProductionRepository;
 import com.timelec.timelec.exception.ResourceNotFoundException;
+import com.timelec.timelec.services.ProductionService;
 
 
 @CrossOrigin
@@ -23,12 +26,25 @@ public class ProductionController {
 	
     @Autowired
     private ProductionRepository productionRepository;
+    
+    @Autowired ProductionService productionService;
+    
  
-	@GetMapping("/all")
-	public List<Summary> listSummary(){
-		return this.productionRepository.findAll();
+	
+    /*
+    @GetMapping("/all")
+	public Page<Summary> listSummary(){
+		return productionRepository.findAll();
 	}
-
+*/
+    
+    
+    @GetMapping("/all")
+	Page<Summary> listSummary(@RequestParam (required = false, defaultValue = "0") int pageNumber,@RequestParam int pageSize){
+		return productionService.getSummary(pageNumber, pageSize);
+	}
+    
+    
 	@GetMapping("/{id}")
 	public Summary getProductionById(@PathVariable Long id) {
 		Summary prod = productionRepository.findById(id).
@@ -36,10 +52,20 @@ public class ProductionController {
 		return prod;
 	}
 	
+	
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 	public List<Summary>getSummaryWithTesterID(@PathVariable Long testerID){
 		List<Summary> listSummaryByTester = productionRepository.findByTesterID(testerID);
-		System.out.println("count(*) du testerID "+testerID+" = " + listSummaryByTester.size());
+		//System.out.println("count(*) du testerID "+testerID+" = " + listSummaryByTester.size());
+		return listSummaryByTester;
+	}
+	
+	
+	
+	@RequestMapping(value = "/testerIDPageable/{testerID}", method = RequestMethod.GET)
+	public Page<Summary>getSummaryWithTesterID1(@PathVariable Long testerID ,@RequestParam int pageNumber,@RequestParam int pageSize){
+		Page<Summary> listSummaryByTester = productionService.findByTesterIDPageable(testerID, pageNumber, pageSize);
+		//System.out.println("count(*) du testerID "+testerID+" = " + listSummaryByTester.size());
 		return listSummaryByTester;
 	}
 	

@@ -64,7 +64,27 @@ public class MachineController {
 	
 	
 	//modifier l'etat de la machine (par reference)
-	@RequestMapping(value="/updateReference/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value="/updateReferenceMachineTrue/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Machine> updateReferenceMachineTrue(@PathVariable int id){
+		Machine machine1 = machineRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Machine not exit with id:" + id));
+		machine1.setReference(true);
+		Machine machineUpdate = machineRepository.save(machine1);
+		return ResponseEntity.ok(machineUpdate);
+	}
+	
+	//modifier l'etat de la machine (par reference)
+	@RequestMapping(value="/updateReferenceMachineFalse/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Machine> updateReferenceMachineFalse(@PathVariable int id){
+		Machine machine1 = machineRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Machine not exit with id:" + id));
+		machine1.setReference(false);
+		Machine machineUpdate = machineRepository.save(machine1);
+		return ResponseEntity.ok(machineUpdate);
+	}
+	
+	//modifier l'etat de la machine (par reference)
+	@RequestMapping(value="/updateReferenceMachine/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Machine> updateReferenceMachine(@PathVariable int id){
 		Machine machine1 = machineRepository.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("Machine not exit with id:" + id));
@@ -72,6 +92,7 @@ public class MachineController {
 		Machine machineUpdate = machineRepository.save(machine1);
 		return ResponseEntity.ok(machineUpdate);
 	}
+	
 	
 	//selectionner la machine réferencée par centre de charge 
 	@RequestMapping(value="/referenced/{centreChargeId}", method = RequestMethod.GET)
@@ -96,6 +117,17 @@ public class MachineController {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
+	}
+	
+	
+	@RequestMapping(value = "/listTesteurReferencedByCentreCharge/{id}", method = RequestMethod.GET)
+	public List<Machine>listTesteurReferencedByCentreCharge(@PathVariable int id){
+		return machineRepository.listTesteurReferencedByCentreCharge(id);
+	}
+	
+	@RequestMapping(value = "/listTesteurReferenced", method = RequestMethod.GET)
+	public List<Machine>listTesteurReferenced(){
+		return machineRepository.listTesteurReferenced();
 	}
 	
 }

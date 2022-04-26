@@ -60,4 +60,20 @@ public class ETLController {
 		}
 		return somme;
 	}
+	
+	@RequestMapping(value="/year/{year}")
+	public List<Summary> findByYear(@PathVariable int year) {
+		return productionRepository.findByYear(year);
+	}
+
+	@RequestMapping(value="/month/{month}")
+	public List<Summary> findByMonth(@PathVariable int month) {
+		return productionRepository.findByMonth(month);
+	}
+	
+	@RequestMapping(value="/month/{month}/year/{year}")
+	public List<Summary> findByMonthByYear(@PathVariable int month, @PathVariable int year) {
+		return productionRepository.findByMonthByYear(month, year);
+	}
+	
 }
