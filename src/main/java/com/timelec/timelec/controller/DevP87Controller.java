@@ -3,6 +3,7 @@ package com.timelec.timelec.controller;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,26 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.timelec.testResultVm.models.Summary;
-import com.timelec.testResultVm.repository.ResultsVMRepository;
-import com.timelec.timelec.exception.ResourceNotFoundException;
-import com.timelec.timelec.services.ResultsVMService;
 
+import com.timelec.testResultsDevP87.models.Summary;
+import com.timelec.testResultsDevP87.repository.DevP87Respository;
+import com.timelec.timelec.exception.ResourceNotFoundException;
+import com.timelec.timelec.services.DevP87Service;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/production")
+@RequestMapping("/api/devP87")
+public class DevP87Controller {
 
-public class ProductionController {
 	
-    @Autowired
-    private ResultsVMRepository productionRepository;
-    
+	@Autowired
+    private DevP87Respository productionRepository;
+	
     @Autowired 
-    private ResultsVMService productionService;
+    private DevP87Service productionService;
     
- 
-	
     /*
     @GetMapping("/all")
 	public Page<Summary> listSummary(){

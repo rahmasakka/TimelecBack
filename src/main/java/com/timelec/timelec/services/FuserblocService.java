@@ -6,14 +6,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.timelec.testResultVm.models.Summary;
-import com.timelec.testResultVm.repository.ResultsVMRepository;
+import com.timelec.testResultsFuserbloc.models.Summary;
+import com.timelec.testResultsFuserbloc.repository.FuserblocRepository;
 
 @Service
-public class ResultsVMService {
-	
+public class FuserblocService {
+
 	@Autowired 
-	ResultsVMRepository productionRepository;
+	FuserblocRepository productionRepository;
 
 	public Page<Summary> getSummary(int pageNumber,int pageSize){
 		Pageable page = PageRequest.of(pageNumber, pageSize);
