@@ -1,4 +1,4 @@
-package com.timelec.timelec.controller;
+package com.timelec.timelec.ETL;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -17,8 +17,8 @@ import com.timelec.timelec.repository.TesteurEnReposRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/ETL")
-public class ETLController {
+@RequestMapping("/api/ResultsVM")
+public class ETLResultsVMController {
 	
 	@Autowired
     private ETLRepository productionRepository;

@@ -3,6 +3,7 @@ package com.timelec.timelec.controller;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,22 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.timelec.testResultVm.models.Summary;
-import com.timelec.testResultVm.repository.ResultsVMRepository;
+
+import com.timelec.testResultsSircoSircover.models.Summary;
+import com.timelec.testResultsSircoSircover.repository.SircoSircoverRepository;
 import com.timelec.timelec.exception.ResourceNotFoundException;
-import com.timelec.timelec.services.ResultsVMService;
+import com.timelec.timelec.services.SircoSircoverService;
 
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/production")
-
-public class ProductionController {
+@RequestMapping("/api/sircoSircover")
+public class SircoSircoverController {
 	
-    @Autowired
-    private ResultsVMRepository productionRepository;
+	@Autowired
+    private SircoSircoverRepository productionRepository;
     
-    @Autowired ResultsVMService productionService;
+    @Autowired 
+    private SircoSircoverService productionService;
     
  
 	

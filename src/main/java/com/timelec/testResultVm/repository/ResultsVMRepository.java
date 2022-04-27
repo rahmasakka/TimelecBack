@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.timelec.testResultVm.models.Summary;
 
 @Repository
-public interface ProductionRepository extends JpaRepository<Summary, Long>{
+public interface ResultsVMRepository extends JpaRepository<Summary, Long>{
 
 	//Page<Summary> findAll();
 	

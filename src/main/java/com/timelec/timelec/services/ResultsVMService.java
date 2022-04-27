@@ -7,12 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.timelec.testResultVm.models.Summary;
-import com.timelec.testResultVm.repository.ProductionRepository;
+import com.timelec.testResultVm.repository.ResultsVMRepository;
 
 @Service
-public class ProductionService {
+public class ResultsVMService {
 	
-	@Autowired ProductionRepository productionRepository;
+	@Autowired ResultsVMRepository productionRepository;
 
 	public Page<Summary> getSummary(int pageNumber,int pageSize){
 		Pageable page = PageRequest.of(pageNumber, pageSize);
@@ -22,6 +22,5 @@ public class ProductionService {
 	public Page<Summary> findByTesterIDPageable(Long testerID ,int pageNumber,int pageSize){
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		return productionRepository.findByTesterIDPageable(testerID, page);
-	}
-	
+	}	
 }
