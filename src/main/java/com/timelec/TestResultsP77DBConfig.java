@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(
 	entityManagerFactoryRef = "testResultsP77EntityManagerFactory",
     transactionManagerRef = "testResultsP77TransactionManager", 
-    basePackages = {"com.timelec.testResultsP77.repository"})
+    basePackages = {"com.timelec.timelec.p77.repository"})
 
 public class TestResultsP77DBConfig {
 	@Bean(name = "testResultsP77DataSource")
@@ -32,7 +32,7 @@ public class TestResultsP77DBConfig {
 	@Bean(name = "testResultsP77EntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean testResultsP77EntityManagerFactory(EntityManagerFactoryBuilder builder, 
 																			@Qualifier("testResultsP77DataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource).packages("com.timelec.testResultsP77.models").persistenceUnit("testResultsP77").build();
+		return builder.dataSource(dataSource).packages("com.timelec.timelec.p77.model").persistenceUnit("testResultsP77").build();
 	}
 	
 	@Bean(name = "testResultsP77TransactionManager")

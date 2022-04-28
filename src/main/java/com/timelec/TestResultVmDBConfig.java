@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(
 	entityManagerFactoryRef = "testResultVMEntityManagerFactory",
     transactionManagerRef = "testResultVMTransactionManager", 
-    basePackages = {"com.timelec.testResultVm.repository"})
+    basePackages = {"com.timelec.timelec.vm.repository"})
 
 
 public class TestResultVmDBConfig {
@@ -33,7 +33,7 @@ public class TestResultVmDBConfig {
 	@Bean(name = "testResultVMEntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean testResultVMEntityManagerFactory(EntityManagerFactoryBuilder builder, 
 																			@Qualifier("testResultVMDataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource).packages("com.timelec.testResultVm.models").persistenceUnit("testResultVM").build();
+		return builder.dataSource(dataSource).packages("com.timelec.timelec.vm.model").persistenceUnit("testResultVM").build();
 	}
 	
 	@Bean(name = "testResultVMTransactionManager")

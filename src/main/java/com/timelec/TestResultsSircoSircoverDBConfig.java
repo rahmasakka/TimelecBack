@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(
 	entityManagerFactoryRef = "testResultsSircoSircoverEntityManagerFactory",
     transactionManagerRef = "testResultsSircoSircoverTransactionManager", 
-    basePackages = {"com.timelec.testResultsSircoSircover.repository"})
+    basePackages = {"com.timelec.timelec.sircoSircover.repository"})
 
 
 public class TestResultsSircoSircoverDBConfig {
@@ -36,7 +36,7 @@ public class TestResultsSircoSircoverDBConfig {
 	@Bean(name = "testResultsSircoSircoverEntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean testResultsSircoSircoverEntityManagerFactory(EntityManagerFactoryBuilder builder, 
 																			@Qualifier("testResultsSircoSircoverDataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource).packages("com.timelec.testResultsSircoSircover.models").persistenceUnit("testResultsSircoSircover").build();
+		return builder.dataSource(dataSource).packages("com.timelec.timelec.sircoSircover.model").persistenceUnit("testResultsSircoSircover").build();
 	}
 	
 	@Bean(name = "testResultsSircoSircoverTransactionManager")
