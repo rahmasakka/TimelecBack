@@ -41,7 +41,7 @@ public class UAPController {
 	}
 	
 	
-	@PostMapping(path = "/createUAP")
+	@PostMapping(path = "/create")
 	public UAP add(@RequestBody UAP uap) {
 	    UAP uap1 = uapRepository.save(uap);
 	  	return uap1;

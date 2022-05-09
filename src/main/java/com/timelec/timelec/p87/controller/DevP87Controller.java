@@ -31,16 +31,9 @@ public class DevP87Controller {
     @Autowired 
     private DevP87Service productionService;
     
-    /*
+
     @GetMapping("/all")
-	public Page<Summary> listSummary(){
-		return productionRepository.findAll();
-	}
-     */
-    
-    
-    @GetMapping("/all")
-	Page<Summary> listSummary(@RequestParam (required = false, defaultValue = "0") int pageNumber,@RequestParam int pageSize){
+	Page<Summary> listSummary(@RequestParam int pageNumber,@RequestParam int pageSize){
 		return productionService.getSummary(pageNumber, pageSize);
 	}
     
@@ -52,33 +45,24 @@ public class DevP87Controller {
 		return prod;
 	}
 	
-	
+
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
-	public List<Summary>getSummaryWithTesterID(@PathVariable Long testerID){
-		List<Summary> listSummaryByTester = productionRepository.findByTesterID(testerID);
-		//System.out.println("count(*) du testerID "+testerID+" = " + listSummaryByTester.size());
-		return listSummaryByTester;
-	}
-	
-	
-	
-	@RequestMapping(value = "/testerIDPageable/{testerID}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryWithTesterID1(@PathVariable Long testerID ,@RequestParam int pageNumber,@RequestParam int pageSize){
 		Page<Summary> listSummaryByTester = productionService.findByTesterIDPageable(testerID, pageNumber, pageSize);
-		//System.out.println("count(*) du testerID "+testerID+" = " + listSummaryByTester.size());
 		return listSummaryByTester;
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}", method = RequestMethod.GET)
-	public List<Summary>getSummaryByStartTime(@PathVariable Date jour){
-		System.out.println("nb de ligne: " + productionRepository.findByDate(jour).size());
-		return productionRepository.findByDate(jour);
+	public Page<Summary>getSummaryByStartTime(@PathVariable Date jour, @RequestParam int pageNumber, @RequestParam int pageSize){
+		//System.out.println("nb de ligne: " + productionRepository.findByDate(jour).size());
+		
+		return productionService.findByDate(jour, pageNumber, pageSize);
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}/testerID/{testerID}", method = RequestMethod.GET)
-	public List<Summary>getSummaryByTesterStartTime(@PathVariable Date jour, @PathVariable Long testerID){
-		System.out.println("nb de ligne: "+ productionRepository.findByDateTesterID(jour, testerID).size());
-		return productionRepository.findByDateTesterID(jour, testerID);
+	public Page<Summary>getSummaryByTesterStartTime(@PathVariable Date jour, @PathVariable Long testerID, @RequestParam int pageNumber, @RequestParam int pageSize){
+		//System.out.println("nb de ligne: "+ productionRepository.findByDateTesterID(jour, testerID).size());
+		return productionService.findByDateTesterID(jour, testerID, pageNumber, pageSize);
 	}
 	
 	@RequestMapping(value="/heure/{jour}/testerID/{testerID}")
@@ -107,14 +91,33 @@ public class DevP87Controller {
 	}
 	
 	@RequestMapping(value="/{jour1}/{jour2}", method = RequestMethod.GET)
-	public List<Summary>listSummaryBetweenTwoDays(@PathVariable Date jour1, @PathVariable Date jour2){
-		return productionRepository.listSummaryBetweenTwoDays(jour1, jour2);
+	Page<Summary>listSummaryBetweenTwoDays(@RequestParam int pageNumber, @RequestParam int pageSize, @PathVariable Date jour1, @PathVariable Date jour2){
+		return productionService.listSummaryBetweenTwoDays(jour1, jour2, pageNumber, pageSize);
 	}
-	
 	
 	@RequestMapping(value="/{jour1}/{jour2}/{testerID}", method = RequestMethod.GET)
-	public List<Summary>listSummaryBetweenTwoDaysByTesterID(@PathVariable Date jour1, @PathVariable Date jour2, @PathVariable Long testerID){
-		return productionRepository.listSummaryBetweenTwoDaysByTesterID(jour1, jour2, testerID);
+	Page<Summary>listSummaryBetweenTwoDaysByTesterID(@RequestParam int pageNumber, @RequestParam int pageSize, @PathVariable Date jour1, @PathVariable Date jour2, @PathVariable Long testerID){
+		return productionService.listSummaryBetweenTwoDaysByTesterID(jour1, jour2, testerID, pageNumber, pageSize);
 	}
 	
+	@RequestMapping(value="/year/{year}", method = RequestMethod.GET)
+	Page<Summary> findByYear(@RequestParam int pageNumber, @RequestParam int pageSize, @PathVariable int year) {
+		return productionService.findByYear(year, pageNumber, pageSize);
+	}
+	
+
+	@RequestMapping(value="/month/{month}", method = RequestMethod.GET)
+	Page<Summary> findByMonth(@RequestParam int pageNumber,@RequestParam int pageSize, @PathVariable int month) {
+		return productionService.findByMonth(month, pageNumber, pageSize);
+	}
+	
+	@RequestMapping(value="/month/{month}/year/{year}", method = RequestMethod.GET)
+	Page<Summary> findByMonthByYear(@RequestParam int pageNumber,@RequestParam int pageSize, @PathVariable int month, @PathVariable int year) {
+		return productionService.findByMonthByYear(month, year, pageNumber, pageSize);
+	}
+	
+	@RequestMapping(value="/listeTesterIdByDatabase", method = RequestMethod.GET)
+	public List<Object>listetesterId(){
+		return productionRepository.listTesterIdByDatabase();
+	}
 }

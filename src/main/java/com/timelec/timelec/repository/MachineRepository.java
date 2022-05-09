@@ -6,14 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.timelec.timelec.models.CentreCharge;
 import com.timelec.timelec.models.Machine;
 
 @Repository
 public interface MachineRepository extends JpaRepository<Machine, Integer> {
 	
 	@Query(value="SELECT * FROM machine where ID_CC = ?1", nativeQuery = true)
-	List<Machine> listMachineByCC(CentreCharge id);
+	List<Machine> listMachineByCC(int id);
 	
 	
 	@Query(value="SELECT * FROM machine where ID_CC = ?1 and reference = 1", nativeQuery = true)

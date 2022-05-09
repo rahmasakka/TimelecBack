@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.timelec.timelec.models.TesteurEnProduction;
 import com.timelec.timelec.models.TesteurEnRepos;
+import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
 
 import com.timelec.timelec.sircoSircover.model.Summary;
@@ -27,13 +29,15 @@ public class ETLSircroSircoverController {
     @Autowired
     private TesteurEnReposRepository testeurEnReposRepository;
 
-	@RequestMapping(value="/nbSecondParJour/{jour}/testerID/{testerID}/nbMinute/{nbMinute}")
-	public int calculNbSecond(@PathVariable Date jour, @PathVariable Long testerID, @PathVariable int nbMinute) {
-		List<Time> result = productionRepository.calculeSecond(jour, testerID);
-		List<Summary> summaries= productionRepository.findByDateTesterID(jour, testerID);
+    @Autowired
+    private TesteurEnProductionRepository testeurEnProductionRepository;
+    
+	@RequestMapping(value="/nbSecondParJour/{jour}/nbMinute/{nbMinute}")
+	public int calculNbSecond(@PathVariable Date jour, @PathVariable int nbMinute) {
+		List<Time> result = productionRepository.calculeSecond(jour);
+		List<Summary> summaries= productionRepository.findByDateTesterID(jour);
 		int somme = 0;
 		for (int i = 1; i<result.size(); i++) {
-			System.out.println(result.get(i));
 			int difference = (int) (result.get(i).getTime() - result.get(i-1).getTime());
 			difference /= 1000;
 			if (difference > (nbMinute * 60)) {
@@ -55,27 +59,34 @@ public class ETLSircroSircoverController {
     	        	}	        	
     	        	Time duree = java.sql.Time.valueOf(time);
                 	testeurEnRepos.setDuree(duree);
+                	testeurEnRepos.setTestStatus(summaries.get(i).getTestStatus());
             		testeurEnReposRepository.save(testeurEnRepos);
             	}
-            }	
+            } else {
+	        	if(testeurEnProductionRepository.existBySummary(summaries.get(i).getIdSummary())==0) {                	
+                	TesteurEnProduction testeurEnProd = new TesteurEnProduction();
+                	testeurEnProd.setIdSummary(summaries.get(i).getIdSummary());
+                	testeurEnProd.setTesterID(summaries.get(i).getTesterID());
+                	testeurEnProd.setIdMechanicalAssembly(summaries.get(i).getMechanicalAssembly().getIdMechanicalAssembly());
+                	testeurEnProd.setTestStartTime(summaries.get(i).getTestStartTime());
+                	testeurEnProd.setDureeSeconde(difference);
+                	String time;
+    				int seconde = difference;
+    	        	int minute = seconde / 60;
+    	        	seconde =  seconde -(minute*60);
+    	        	if( minute <10) {
+    	        		time = "00:0"+minute+":"+seconde;
+    	        	}else {
+    	        		time = "00:"+minute+":"+seconde;
+    	        	}	        	
+    	        	Time duree = java.sql.Time.valueOf(time);
+    	        	testeurEnProd.setTestStatus(summaries.get(i).getTestStatus());
+    	        	testeurEnProd.setDuree(duree);
+                	testeurEnProductionRepository.save(testeurEnProd);
+            	}
+            }
             somme += difference;
 		}
 		return somme;
 	}
-	
-	@RequestMapping(value="/year/{year}")
-	public List<Summary> findByYear(@PathVariable int year) {
-		return productionRepository.findByYear(year);
-	}
-
-	@RequestMapping(value="/month/{month}")
-	public List<Summary> findByMonth(@PathVariable int month) {
-		return productionRepository.findByMonth(month);
-	}
-	
-	@RequestMapping(value="/month/{month}/year/{year}")
-	public List<Summary> findByMonthByYear(@PathVariable int month, @PathVariable int year) {
-		return productionRepository.findByMonthByYear(month, year);
-	}
-	
 }

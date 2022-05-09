@@ -2,21 +2,22 @@ package com.timelec.timelec.models;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "Testeur_En_Arret")
-public class TesteurEnRepos { 
-	
+@Table(name = "Testeur_En_Production")
+public class TesteurEnProduction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_testeur_Repos")
+	@Column(name="ID_testeur_Production")
 	private long idTesteurEnRepos;
 	
 	@Column(name="ID_summary")
@@ -33,12 +34,12 @@ public class TesteurEnRepos {
     private long idMechanicalAssembly;
 
 	
-	@Column(name="Duree_repos_second")
+	@Column(name="Duree_prod_second")
 	private int dureeSeconde;
 	
 	@Column(name="Duree")
 	private Time duree;
-
+	
 	@Column(name="Test_status")
 	private boolean testStatus;
 	
@@ -97,8 +98,13 @@ public class TesteurEnRepos {
 	public void setDuree(Time duree) {
 		this.duree = duree;
 	}
-
 	
+
+
+	public TesteurEnProduction() {
+		super();
+	}
+
 	public boolean isTestStatus() {
 		return testStatus;
 	}
@@ -107,11 +113,7 @@ public class TesteurEnRepos {
 		this.testStatus = testStatus;
 	}
 
-	public TesteurEnRepos() {
-		super();
-	}
-
-	public TesteurEnRepos(long idTesteurEnRepos, long idSummary, Long testerID, Timestamp testStartTime,
+	public TesteurEnProduction(long idTesteurEnRepos, long idSummary, Long testerID, Timestamp testStartTime,
 			long idMechanicalAssembly, int dureeSeconde, Time duree, boolean testStatus) {
 		super();
 		this.idTesteurEnRepos = idTesteurEnRepos;
@@ -123,5 +125,6 @@ public class TesteurEnRepos {
 		this.duree = duree;
 		this.testStatus = testStatus;
 	}
-	
+
+
 }

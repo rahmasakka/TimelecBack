@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.exception.ResourceNotFoundException;
-import com.timelec.timelec.models.CentreCharge;
 import com.timelec.timelec.models.Machine;
 import com.timelec.timelec.repository.MachineRepository;
 
@@ -43,7 +42,7 @@ public class MachineController {
 	}
 	
 	
-	@PostMapping(path = "/createMachine")
+	@PostMapping(path = "/create")
 	public Machine addMachine(@RequestBody Machine machine) {
 	    Machine machine1 = machineRepository.save(machine);
 	  	return machine1;
@@ -58,28 +57,21 @@ public class MachineController {
 		machine1.setMachineDescription(machine.getMachineDescription());
 		machine1.setMachineName(machine.getMachineName());
 		machine1.setReference(machine.getReference());
-		Machine machineUpdate = machineRepository.save(machine1);
-		return ResponseEntity.ok(machineUpdate);
-	}
-	
-	
-	//modifier l'etat de la machine (par reference)
-	@RequestMapping(value="/updateReferenceMachineTrue/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Machine> updateReferenceMachineTrue(@PathVariable int id){
-		Machine machine1 = machineRepository.findById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Machine not exit with id:" + id));
-		machine1.setReference(true);
+		machine.setMachineCategory(machine.getMachineCategory());
 		Machine machineUpdate = machineRepository.save(machine1);
 		return ResponseEntity.ok(machineUpdate);
 	}
 	
 	//modifier l'etat de la machine (par reference)
-	@RequestMapping(value="/updateReferenceMachineFalse/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Machine> updateReferenceMachineFalse(@PathVariable int id){
-		Machine machine1 = machineRepository.findById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Machine not exit with id:" + id));
-		machine1.setReference(false);
-		Machine machineUpdate = machineRepository.save(machine1);
+	@RequestMapping(value="/updateReferenceMachineFalse/{idCC}", method = RequestMethod.PUT)
+	public ResponseEntity<Machine> updateReferenceMachineFalse(@PathVariable int idCC){
+		List<Machine> machines = machineRepository.listMachineByCC(idCC);
+		Machine machineUpdate = null;
+		
+		for (int i = 0; i<machines.size(); i++) {
+			machines.get(i).setReference(false);
+			machineUpdate = machineRepository.save(machines.get(i));
+		}
 		return ResponseEntity.ok(machineUpdate);
 	}
 	
@@ -103,8 +95,8 @@ public class MachineController {
 
 	
 	//selectionner la liste des machines par centre de charge 
-	@RequestMapping(value = "/listMachineByCC/{id}", method = RequestMethod.GET)
-	public List<Machine>listMachineByCC(@PathVariable CentreCharge id){
+	@RequestMapping(value = "/sonByMother/{id}", method = RequestMethod.GET)
+	public List<Machine>listMachineByCC(@PathVariable int id){
 		return machineRepository.listMachineByCC(id);
 	}
 	

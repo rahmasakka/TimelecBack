@@ -84,7 +84,7 @@ public class Summary {
 	}
 
 
-	public boolean isTestStatus() {
+	public boolean getTestStatus() {
 		return testStatus;
 	}
 

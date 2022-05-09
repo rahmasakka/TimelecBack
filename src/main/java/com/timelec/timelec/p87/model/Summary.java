@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 @Table(name = "table_summary")
 public class Summary {
@@ -72,126 +71,104 @@ public class Summary {
     @JoinColumn(name="Table_mechanical_assembly_ID_mechanical_assembly", nullable=false)
     private MechanicalAssembly mechanicalAssembly;
 
+    
+    
 
 	public long getIdSummary() {
 		return IdSummary;
 	}
 
-
 	public Long getTesterID() {
 		return testerID;
 	}
 
-
-	public boolean isTestStatus() {
+	public boolean getTestStatus() {
 		return testStatus;
 	}
-
 
 	public String getSiteCode() {
 		return siteCode;
 	}
 
-
 	public String getOperatorName() {
 		return operatorName;
 	}
-
 
 	public String getVlo() {
 		return vlo;
 	}
 
-
 	public String getTestSoftVersion() {
 		return testSoftVersion;
 	}
-
 
 	public Timestamp getTestStartTime() {
 		return testStartTime;
 	}
 
-
 	public String getClientSerialNo() {
 		return clientSerialNo;
 	}
-
 
 	public long getTestIndex() {
 		return testIndex;
 	}
 
-
 	public Integer getReworkIndex() {
 		return reworkIndex;
 	}
-
 
 	public MechanicalAssembly getMechanicalAssembly() {
 		return mechanicalAssembly;
 	}
 
-
 	public void setIdSummary(long idSummary) {
 		IdSummary = idSummary;
 	}
-
 
 	public void setTesterID(Long testerID) {
 		this.testerID = testerID;
 	}
 
-
 	public void setTestStatus(boolean testStatus) {
 		this.testStatus = testStatus;
 	}
-
 
 	public void setSiteCode(String siteCode) {
 		this.siteCode = siteCode;
 	}
 
-
 	public void setOperatorName(String operatorName) {
 		this.operatorName = operatorName;
 	}
-
 
 	public void setVlo(String vlo) {
 		this.vlo = vlo;
 	}
 
-
 	public void setTestSoftVersion(String testSoftVersion) {
 		this.testSoftVersion = testSoftVersion;
 	}
-
 
 	public void setTestStartTime(Timestamp testStartTime) {
 		this.testStartTime = testStartTime;
 	}
 
-
 	public void setClientSerialNo(String clientSerialNo) {
 		this.clientSerialNo = clientSerialNo;
 	}
-
 
 	public void setTestIndex(long testIndex) {
 		this.testIndex = testIndex;
 	}
 
-
 	public void setReworkIndex(Integer reworkIndex) {
 		this.reworkIndex = reworkIndex;
 	}
 
-
 	public void setMechanicalAssembly(MechanicalAssembly mechanicalAssembly) {
 		this.mechanicalAssembly = mechanicalAssembly;
 	}
-
 
 	public Summary(long idSummary, Long testerID, boolean testStatus, String siteCode, String operatorName, String vlo,
 			String testSoftVersion, Timestamp testStartTime, String clientSerialNo, long testIndex, Integer reworkIndex,
@@ -210,9 +187,8 @@ public class Summary {
 		this.reworkIndex = reworkIndex;
 		this.mechanicalAssembly = mechanicalAssembly;
 	}
-	
+
 	public Summary() {
 		super();
-	}
-
+	}    
 }

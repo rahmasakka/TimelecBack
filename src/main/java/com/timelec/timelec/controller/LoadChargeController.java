@@ -39,7 +39,7 @@ public class LoadChargeController {
 		return loadCharge;
 	}
 	
-	@PostMapping(path = "/createCC")
+	@PostMapping(path = "/create")
 	public CentreCharge add(@RequestBody CentreCharge cc) {
 	    CentreCharge cc1 = loadChargeRepository.save(cc);
 	  	return cc1;
@@ -67,7 +67,7 @@ public class LoadChargeController {
 		return ResponseEntity.ok(updateCC);	
 	}		
 	
-	@RequestMapping(value="/listCCByUAP/{IdUAP}",  method = RequestMethod.GET)
+	@RequestMapping(value="/sonByMother/{IdUAP}",  method = RequestMethod.GET)
 	public List<CentreCharge> listCCByUAP(@PathVariable UAP IdUAP) {
 		return loadChargeRepository.listCCByUAP(IdUAP);
 	}	

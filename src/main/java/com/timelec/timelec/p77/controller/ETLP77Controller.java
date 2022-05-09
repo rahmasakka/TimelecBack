@@ -1,4 +1,4 @@
-package com.timelec.timelec.p87.controller;
+package com.timelec.timelec.p77.controller;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -12,19 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.models.TesteurEnProduction;
 import com.timelec.timelec.models.TesteurEnRepos;
+import com.timelec.timelec.p77.model.Summary;
+import com.timelec.timelec.p77.repository.ETLP77Repository;
 import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
 
-import com.timelec.timelec.p87.model.Summary;
-import com.timelec.timelec.p87.repository.ETLDevP87Repository;
-
 @CrossOrigin
 @RestController
-@RequestMapping("/api/devP87")
-public class ETLDevP87Controller {
-
+@RequestMapping("/api/p77")
+public class ETLP77Controller {
 	@Autowired
-    private ETLDevP87Repository productionRepository;
+    private ETLP77Repository productionRepository;
     
     @Autowired
     private TesteurEnReposRepository testeurEnReposRepository;
