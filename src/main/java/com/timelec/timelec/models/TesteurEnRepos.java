@@ -123,5 +123,6 @@ public class TesteurEnRepos {
 		this.duree = duree;
 		this.testStatus = testStatus;
 	}
+
 	
 }

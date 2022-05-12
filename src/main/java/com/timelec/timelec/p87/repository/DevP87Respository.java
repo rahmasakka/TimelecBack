@@ -34,6 +34,7 @@ public interface DevP87Respository extends JpaRepository<Summary, Long> {
 			   + "where Tester_ID = ?2 and Convert(Test_start_time, date) = ?1", nativeQuery = true)
 	public List<Time> calculeSecond(Date jour, Long testerID);
 
+	
 	@Query(value="select * from table_summary" + 
 			"	where Convert(Test_start_time, date) >= ?1 and Convert(Test_start_time, date) <= ?2", nativeQuery = true)
 	Page<Summary> listSummaryBetweenTwoDays(Date jour1, Date jour2, Pageable page );

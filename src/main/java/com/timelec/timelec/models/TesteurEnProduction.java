@@ -42,14 +42,9 @@ public class TesteurEnProduction {
 	
 	@Column(name="Test_status")
 	private boolean testStatus;
-	
-	
+
 	public long getIdTesteurEnRepos() {
 		return idTesteurEnRepos;
-	}
-
-	public void setIdTesteurEnRepos(long idTesteurEnRepos) {
-		this.idTesteurEnRepos = idTesteurEnRepos;
 	}
 
 	public long getIdSummary() {
@@ -68,6 +63,22 @@ public class TesteurEnProduction {
 		return idMechanicalAssembly;
 	}
 
+	public int getDureeSeconde() {
+		return dureeSeconde;
+	}
+
+	public Time getDuree() {
+		return duree;
+	}
+
+	public boolean isTestStatus() {
+		return testStatus;
+	}
+
+	public void setIdTesteurEnRepos(long idTesteurEnRepos) {
+		this.idTesteurEnRepos = idTesteurEnRepos;
+	}
+
 	public void setIdSummary(long idSummary) {
 		this.idSummary = idSummary;
 	}
@@ -79,16 +90,9 @@ public class TesteurEnProduction {
 	public void setTestStartTime(Timestamp testStartTime) {
 		this.testStartTime = testStartTime;
 	}
+
 	public void setIdMechanicalAssembly(long idMechanicalAssembly) {
 		this.idMechanicalAssembly = idMechanicalAssembly;
-	}
-
-	public int getDureeSeconde() {
-		return dureeSeconde;
-	}
-
-	public Time getDuree() {
-		return duree;
 	}
 
 	public void setDureeSeconde(int dureeSeconde) {
@@ -97,16 +101,6 @@ public class TesteurEnProduction {
 
 	public void setDuree(Time duree) {
 		this.duree = duree;
-	}
-	
-
-
-	public TesteurEnProduction() {
-		super();
-	}
-
-	public boolean isTestStatus() {
-		return testStatus;
 	}
 
 	public void setTestStatus(boolean testStatus) {
@@ -125,6 +119,10 @@ public class TesteurEnProduction {
 		this.duree = duree;
 		this.testStatus = testStatus;
 	}
-
+	
+	public TesteurEnProduction() {
+		super();
+	}
+	
 
 }
