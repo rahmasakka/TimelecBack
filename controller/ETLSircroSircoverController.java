@@ -77,5 +77,4 @@ public class ETLSircroSircoverController {
 	public List<Summary> findByMonthByYear(@PathVariable int month, @PathVariable int year) {
 		return productionRepository.findByMonthByYear(month, year);
 	}
-	
 }

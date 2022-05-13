@@ -27,6 +27,7 @@ public class ETLP77Controller {
 	@Autowired
     private ETLP77Repository productionRepository;
 	
+
 	@Autowired
 	private DashboardRepository dashboardRepository;
 	
@@ -68,8 +69,8 @@ public class ETLP77Controller {
 	        			quantiteConforme++;
 	        		else 
 	        			quantiteNonConforme++;
-	    			int difference = (int) (summaries.get(i).getTestStartTime().getTime() - summaries.get(i-1).getTestStartTime().getTime());
-	    			difference/=1000;
+	    			int difference = (int) Math.abs(summaries.get(i).getTestStartTime().getTime()- summaries.get(i-1).getTestStartTime().getTime())/ 1000;
+	    			System.out.println(difference);
 	                if(difference < 180) {
 	                	dureeFonctionnementSeconde += difference;
 	                	TesteurEnProduction testeurEnProd = new TesteurEnProduction();
@@ -100,9 +101,9 @@ public class ETLP77Controller {
 	    	    	newLigne.setDate(jour);
 	    	    	newLigne.setDureeDisfonctionnementSeconde(dureeDisfonctionnementSeconde);
 	    	    	newLigne.setDureeFonctionnementSeconde(dureeFonctionnementSeconde);
-	    	    	newLigne.setDatabase("p77");
-	    	    	newLigne.setFinishTime(summaries.get(summaries.size() - 1).getTestStartTime());
-	    	    	newLigne.setStartTime(summaries.get(0).getTestStartTime());
+	    	    	newLigne.setDatabase("vm");
+	    	    	newLigne.setFinishTime(getTime(summaries.get(summaries.size() - 1).getTestStartTime().getTime()/1000));
+	    	    	newLigne.setStartTime(getTime(summaries.get(0).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setQuantiteConforme(quantiteConforme);
 	    	    	newLigne.setQuantiteNonConforme(quantiteNonConforme);
 	    	    	newLigne.setTesteurId(testerID);

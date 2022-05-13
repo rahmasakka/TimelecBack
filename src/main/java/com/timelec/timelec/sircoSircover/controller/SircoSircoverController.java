@@ -1,7 +1,6 @@
 package com.timelec.timelec.sircoSircover.controller;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +64,7 @@ public class SircoSircoverController {
 		return productionService.findByDateTesterID(jour, testerID, pageNumber, pageSize);
 	}
 	
-	@RequestMapping(value="/heure/{jour}/testerID/{testerID}")
-	public List<Time> calculeSecond(@PathVariable Date jour, @PathVariable Long testerID){
-		return productionRepository.calculeSecond(jour, testerID);
-	}
-	
+	/*
 	@RequestMapping(value="/calcul/{jour}/testerID/{testerID}")
 	public Integer calculNbSecondFinDebut(@PathVariable Date jour, @PathVariable Long testerID) {
 		List<Time> Result = calculeSecond(jour, testerID );
@@ -77,11 +72,6 @@ public class SircoSircoverController {
 		int debut = (int) (Result.get(0).getTime() / 1000); //nb seconde
 		int fin =  (int) (Result.get(Result.size()-1).getTime() / 1000); //nb seconde
 		int difference = fin - debut;
-/*
-		System.out.println("debut en seconde: "+ debut );
-		System.out.println("fin en seconde: "+ fin );
-		System.out.println("difference en seconde: "+ difference );
-*/
 		int nb_heure = difference / (60*60);
 		difference = difference - (nb_heure * 60 *60) ;
 		int nb_minute = difference / (60);
@@ -89,7 +79,7 @@ public class SircoSircoverController {
 		System.out.println(nb_heure + ":" + nb_minute + ":" + difference );
 		return fin - debut;
 	}
-	
+	*/
 	@RequestMapping(value="/{jour1}/{jour2}", method = RequestMethod.GET)
 	Page<Summary>listSummaryBetweenTwoDays(@RequestParam int pageNumber, @RequestParam int pageSize, @PathVariable Date jour1, @PathVariable Date jour2){
 		return productionService.listSummaryBetweenTwoDays(jour1, jour2, pageNumber, pageSize);

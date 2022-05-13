@@ -2,7 +2,6 @@ package com.timelec.timelec.models;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,13 +49,13 @@ public class Dashboard {
     @Column(name="db")
     private String database;
     
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @Column(name="date_depart")
-    private Timestamp startTime;
+    @JsonFormat(pattern="HH:mm:ss")
+    @Column(name="heure_depart")
+    private Time startTime;
    
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @Column(name="date_fin")
-    private Timestamp finishTime;
+    @JsonFormat(pattern="HH:mm:ss")
+    @Column(name="heure_fin")
+    private Time finishTime;
 
 	public Long getId() {
 		return id;
@@ -98,11 +97,11 @@ public class Dashboard {
 		return database;
 	}
 
-	public Timestamp getStartTime() {
+	public Time getStartTime() {
 		return startTime;
 	}
 
-	public Timestamp getFinishTime() {
+	public Time getFinishTime() {
 		return finishTime;
 	}
 
@@ -146,17 +145,17 @@ public class Dashboard {
 		this.database = database;
 	}
 
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(Time startTime) {
 		this.startTime = startTime;
 	}
 
-	public void setFinishTime(Timestamp finishTime) {
+	public void setFinishTime(Time finishTime) {
 		this.finishTime = finishTime;
 	}
 
 	public Dashboard(Long id, Date date, int testeurId, long quantiteConforme, long quantiteNonConforme,
 			long dureeFonctionnementSeconde, long dureeDisfonctionnementSeconde, Time dureeFonctionnement,
-			Time dureeDisfonctionnement, String database, Timestamp startTime, Timestamp finishTime) {
+			Time dureeDisfonctionnement, String database, Time startTime, Time finishTime) {
 		super();
 		this.id = id;
 		this.date = date;

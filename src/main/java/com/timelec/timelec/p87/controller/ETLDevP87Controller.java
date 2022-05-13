@@ -102,8 +102,8 @@ public class ETLDevP87Controller {
 	    	    	newLigne.setDureeDisfonctionnementSeconde(dureeDisfonctionnementSeconde);
 	    	    	newLigne.setDureeFonctionnementSeconde(dureeFonctionnementSeconde);
 	    	    	newLigne.setDatabase("devP87");
-	    	    	newLigne.setFinishTime(summaries.get(summaries.size() - 1).getTestStartTime());
-	    	    	newLigne.setStartTime(summaries.get(0).getTestStartTime());
+	    	    	newLigne.setFinishTime(getTime(summaries.get(summaries.size() - 1).getTestStartTime().getTime()/1000));
+	    	    	newLigne.setStartTime(getTime(summaries.get(0).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setQuantiteConforme(quantiteConforme);
 	    	    	newLigne.setQuantiteNonConforme(quantiteNonConforme);
 	    	    	newLigne.setTesteurId(testerID);
