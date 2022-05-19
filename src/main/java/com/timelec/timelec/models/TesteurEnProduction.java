@@ -1,6 +1,5 @@
 package com.timelec.timelec.models;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -8,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -17,14 +18,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class TesteurEnProduction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_testeur_Production")
+	@Column(name="ID_production")
 	private long idTesteurEnRepos;
 	
 	@Column(name="ID_summary")
 	private long idSummary;
 		
-	@Column(name="Tester_ID") 
-	private Long testerID;
+//	@Column(name="Tester_ID") 
+//	private Long testerID;
+	
+    @ManyToOne
+    @JoinColumn(name="ID_Machine")
+    private Machine testerID;
+    
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name="Test_start_time")
@@ -38,7 +44,7 @@ public class TesteurEnProduction {
 	private int dureeSeconde;
 	
 	@Column(name="Duree")
-	private Time duree;
+	private String duree;
 	
 	@Column(name="Test_status")
 	private boolean testStatus;
@@ -51,7 +57,7 @@ public class TesteurEnProduction {
 		return idSummary;
 	}
 
-	public Long getTesterID() {
+	public Machine getTesterID() {
 		return testerID;
 	}
 
@@ -67,7 +73,7 @@ public class TesteurEnProduction {
 		return dureeSeconde;
 	}
 
-	public Time getDuree() {
+	public String getDuree() {
 		return duree;
 	}
 
@@ -83,7 +89,7 @@ public class TesteurEnProduction {
 		this.idSummary = idSummary;
 	}
 
-	public void setTesterID(Long testerID) {
+	public void setTesterID(Machine testerID) {
 		this.testerID = testerID;
 	}
 
@@ -99,7 +105,7 @@ public class TesteurEnProduction {
 		this.dureeSeconde = dureeSeconde;
 	}
 
-	public void setDuree(Time duree) {
+	public void setDuree(String duree) {
 		this.duree = duree;
 	}
 
@@ -107,8 +113,8 @@ public class TesteurEnProduction {
 		this.testStatus = testStatus;
 	}
 
-	public TesteurEnProduction(long idTesteurEnRepos, long idSummary, Long testerID, Timestamp testStartTime,
-			long idMechanicalAssembly, int dureeSeconde, Time duree, boolean testStatus) {
+	public TesteurEnProduction(long idTesteurEnRepos, long idSummary, Machine testerID, Timestamp testStartTime,
+			long idMechanicalAssembly, int dureeSeconde, String duree, boolean testStatus) {
 		super();
 		this.idTesteurEnRepos = idTesteurEnRepos;
 		this.idSummary = idSummary;

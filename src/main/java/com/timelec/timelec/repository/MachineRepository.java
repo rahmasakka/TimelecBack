@@ -11,14 +11,14 @@ import com.timelec.timelec.models.Machine;
 @Repository
 public interface MachineRepository extends JpaRepository<Machine, Integer> {
 	
-	@Query(value="SELECT * FROM machine where ID_CC = ?1", nativeQuery = true)
+	@Query(value="SELECT * FROM machine where Centre_de_charge = ?1", nativeQuery = true)
 	List<Machine> listMachineByCC(int id);
 	
 	
-	@Query(value="SELECT * FROM machine where ID_CC = ?1 and reference = 1", nativeQuery = true)
+	@Query(value="SELECT * FROM machine where Centre_de_charge = ?1 and reference = 1", nativeQuery = true)
 	Machine machineReferencedToCentreCharge(int centreChargeId);
 	
-	@Query(value="SELECT * FROM timelec.machine where ID_CC=?1 and Machine_category= 'testeur' and reference = 1;" , nativeQuery = true)
+	@Query(value="SELECT * FROM timelec.machine where Centre_de_charge=?1 and Machine_category= 'testeur' and reference = 1;" , nativeQuery = true)
 	List<Machine> listTesteurReferencedByCentreCharge(int centrechargeId);
 	
 	@Query(value="SELECT * FROM timelec.machine where Machine_category= 'testeur' and reference = 1;" , nativeQuery = true)

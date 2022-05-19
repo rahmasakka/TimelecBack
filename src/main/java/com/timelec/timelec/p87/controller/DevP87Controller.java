@@ -14,19 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.timelec.timelec.exception.ResourceNotFoundException;
-import com.timelec.timelec.models.Dashboard;
-import com.timelec.timelec.models.TesteurEnProduction;
-import com.timelec.timelec.models.TesteurEnRepos;
 import com.timelec.timelec.p87.model.Summary;
 import com.timelec.timelec.p87.repository.DevP87Respository;
 import com.timelec.timelec.p87.service.DevP87Service;
-import com.timelec.timelec.repository.DashboardRepository;
-import com.timelec.timelec.repository.TesteurEnProductionRepository;
-import com.timelec.timelec.repository.TesteurEnReposRepository;
-import com.timelec.timelec.vm.repository.VMRepository;
-import com.timelec.timelec.vm.service.ResultsVMService;
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api/devP87")

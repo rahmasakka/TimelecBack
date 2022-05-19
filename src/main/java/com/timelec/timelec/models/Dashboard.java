@@ -1,13 +1,16 @@
 package com.timelec.timelec.models;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,13 +24,20 @@ public class Dashboard {
 	@Column(name="ID")
 	private Long id;
 	
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd", timezone="Europe/Paris")
 	@Column(name="Test_start_time")
 	private Date date;	
     
-    @Column(name="tester_id")
-    private int testeurId;
+//    @Column(name="tester_id")
+//    private int testeurId;
 
+    
+    @ManyToOne
+    @JoinColumn(name="ID_Machine")
+    private Machine testeurId;
+    
+    
     @Column(name="quantite_conforme")
     private long quantiteConforme;
     
@@ -41,121 +51,144 @@ public class Dashboard {
     private long dureeDisfonctionnementSeconde;
     
     @Column(name="duree_fonctionnement")
-    private Time dureeFonctionnement;
+    private String dureeFonctionnement;
     
     @Column(name="duree_disfonctionnement")
-    private Time dureeDisfonctionnement;
+    private String dureeDisfonctionnement;
     
     @Column(name="db")
     private String database;
     
-    @JsonFormat(pattern="HH:mm:ss")
+  //  @JsonFormat(pattern="HH:mm:ss")
     @Column(name="heure_depart")
-    private Time startTime;
+    private String startTime;
    
-    @JsonFormat(pattern="HH:mm:ss")
+   // @JsonFormat(pattern="HH:mm:ss")
     @Column(name="heure_fin")
-    private Time finishTime;
-
-	public Long getId() {
+    private String finishTime;
+    
+    public Long getId() {
 		return id;
 	}
+
 
 	public Date getDate() {
 		return date;
 	}
 
-	public int getTesteurId() {
+
+	public Machine getTesteurId() {
 		return testeurId;
 	}
+
 
 	public long getQuantiteConforme() {
 		return quantiteConforme;
 	}
 
+
 	public long getQuantiteNonConforme() {
 		return quantiteNonConforme;
 	}
+
 
 	public long getDureeFonctionnementSeconde() {
 		return dureeFonctionnementSeconde;
 	}
 
+
 	public long getDureeDisfonctionnementSeconde() {
 		return dureeDisfonctionnementSeconde;
 	}
 
-	public Time getDureeFonctionnement() {
+
+	public String getDureeFonctionnement() {
 		return dureeFonctionnement;
 	}
 
-	public Time getDureeDisfonctionnement() {
+
+	public String getDureeDisfonctionnement() {
 		return dureeDisfonctionnement;
 	}
+
 
 	public String getDatabase() {
 		return database;
 	}
 
-	public Time getStartTime() {
+
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public Time getFinishTime() {
+
+	public String getFinishTime() {
 		return finishTime;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	public void setTesteurId(int testeurId) {
+
+	public void setTesteurId(Machine testeurId) {
 		this.testeurId = testeurId;
 	}
+
 
 	public void setQuantiteConforme(long quantiteConforme) {
 		this.quantiteConforme = quantiteConforme;
 	}
 
+
 	public void setQuantiteNonConforme(long quantiteNonConforme) {
 		this.quantiteNonConforme = quantiteNonConforme;
 	}
+
 
 	public void setDureeFonctionnementSeconde(long dureeFonctionnementSeconde) {
 		this.dureeFonctionnementSeconde = dureeFonctionnementSeconde;
 	}
 
+
 	public void setDureeDisfonctionnementSeconde(long dureeDisfonctionnementSeconde) {
 		this.dureeDisfonctionnementSeconde = dureeDisfonctionnementSeconde;
 	}
 
-	public void setDureeFonctionnement(Time dureeFonctionnement) {
+
+	public void setDureeFonctionnement(String dureeFonctionnement) {
 		this.dureeFonctionnement = dureeFonctionnement;
 	}
 
-	public void setDureeDisfonctionnement(Time dureeDisfonctionnement) {
+
+	public void setDureeDisfonctionnement(String dureeDisfonctionnement) {
 		this.dureeDisfonctionnement = dureeDisfonctionnement;
 	}
+
 
 	public void setDatabase(String database) {
 		this.database = database;
 	}
 
-	public void setStartTime(Time startTime) {
+
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public void setFinishTime(Time finishTime) {
+
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
 
-	public Dashboard(Long id, Date date, int testeurId, long quantiteConforme, long quantiteNonConforme,
-			long dureeFonctionnementSeconde, long dureeDisfonctionnementSeconde, Time dureeFonctionnement,
-			Time dureeDisfonctionnement, String database, Time startTime, Time finishTime) {
+	public Dashboard(Long id, Date date, Machine testeurId, long quantiteConforme, long quantiteNonConforme,
+			long dureeFonctionnementSeconde, long dureeDisfonctionnementSeconde, String dureeFonctionnement,
+			String dureeDisfonctionnement, String database, String startTime, String finishTime) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -171,7 +204,8 @@ public class Dashboard {
 		this.finishTime = finishTime;
 	}
 
+    
 	public Dashboard() {
 		super();
-	}
+	}   
 }

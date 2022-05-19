@@ -50,6 +50,6 @@ public interface VMRepository extends JpaRepository<Summary, Long>{
 	@Query(value="SELECT * FROM table_summary where year(convert(Test_start_time, date))= ?2 and month(convert(Test_start_time, date))= ?1",nativeQuery = true)
 	Page<Summary> findByMonthByYear(int month, int year, Pageable page);	
 	
-	@Query(value="SELECT distinct(Tester_ID) FROM table_summary;", nativeQuery = true)
+	@Query(value="SELECT distinct(Tester_ID) FROM table_summary", nativeQuery = true)
 	List<Object>listTesterIdByDatabase();
 }

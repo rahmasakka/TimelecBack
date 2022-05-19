@@ -1,7 +1,6 @@
 package com.timelec.timelec.sircoSircover.controller;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.models.Dashboard;
+import com.timelec.timelec.models.Machine;
 import com.timelec.timelec.models.TesteurEnProduction;
 import com.timelec.timelec.models.TesteurEnRepos;
 import com.timelec.timelec.repository.DashboardRepository;
+import com.timelec.timelec.repository.MachineRepository;
 import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
 
@@ -29,7 +30,6 @@ public class ETLSircroSircoverController {
 	@Autowired
     private ETLSircoSicroverRepository productionRepository;
 	
-
 	@Autowired
 	private DashboardRepository dashboardRepository;
 	
@@ -39,82 +39,99 @@ public class ETLSircroSircoverController {
 	@Autowired
 	private TesteurEnProductionRepository testeurEnProductionRepository;
 	
+	@Autowired
+	private MachineRepository machineRepository;
 	
-	Time getTime(long secondes) {
-        long heures = (secondes / 3600) % 60;
-        long minutes = (secondes / 60) % 60;
-        long seconds = secondes % 60;
-        Time timing = Time.valueOf(heures + ":" + minutes + ":" + seconds);
-        return timing;
+	
+	public String getTime(long totalSecs) {
+	//	long jour = (totalSecs / 3600) /24 ;
+		long heures = (totalSecs / 3600) %24;
+		long minutes = (totalSecs % 3600) / 60;
+		long seconds = totalSecs % 60;
+		//System.out.println("jour " + jour);  
+		//System.out.println(heures + ":" + minutes + ":" + seconds);  
+		return(heures + ":" + minutes + ":" + seconds);
+		
 	}
 	
-    @GetMapping("/{jour}/{testerID}")
-	private List<Summary> ETL(@PathVariable Date jour, @PathVariable int testerID) {    	
-    	long quantiteNonConforme = 0;
-    	long quantiteConforme = 0;	
-    	long dureeFonctionnementSeconde = 0;	
-    	long dureeDisfonctionnementSeconde = 0;	
+	
+	@GetMapping("/test/{nbSeconde}")
+	private String calcul(@PathVariable long nbSeconde) {
+		return getTime(nbSeconde);
+	}
+	
+	
+    @GetMapping("/{jour}")
+	private void ETL(@PathVariable Date jour) {   
+    	
+    	List<Machine> listMachine = machineRepository.findAll();
+    	for (int tester = 0; tester< listMachine.size(); tester++) {
+        	long quantiteNonConforme = 0;
+        	long quantiteConforme = 0;	
+        	long dureeFonctionnementSeconde = 0;	
+        	long dureeDisfonctionnementSeconde = 0;
+        	
+        	List<Summary> summaries = productionRepository.listSummarydByDateTester(jour, listMachine.get(tester).getIdMachine());
+        	if((dashboardRepository.listLigneByDateTester(jour , listMachine.get(tester).getIdMachine())==0) ) {
+        		
+        		if(productionRepository.nbLigneByDateTester(jour, listMachine.get(tester).getIdMachine())!=0) {
+    	    		if(summaries.get(0).getTestStatus() == true) 
+    	    			quantiteConforme++;
+    	    		else 
+    	    			quantiteNonConforme++;
+    	        	
+    	        	for(int i = 1; i< summaries.size(); i++) {
+    	        		if(summaries.get(i).getTestStatus() == true) 
+    	        			quantiteConforme++;
+    	        		else 
+    	        			quantiteNonConforme++;
+    	    			int difference = (int) Math.abs(summaries.get(i).getTestStartTime().getTime()- summaries.get(i-1).getTestStartTime().getTime())/ 1000;
+    	                if (difference < listMachine.get(tester).getTauxFonctionnement() * 60) {
+        	    			//System.out.print("fonctionnement " +i + "   "+ difference);
+    	                	dureeFonctionnementSeconde += difference;
+        	    			//System.out.println("======> somme " + dureeFonctionnementSeconde);
+    	                	TesteurEnProduction testeurEnProd = new TesteurEnProduction();
+    	                	testeurEnProd.setIdSummary(summaries.get(i).getIdSummary());
+    	                	testeurEnProd.setTesterID(listMachine.get(tester));
+    	                	testeurEnProd.setIdMechanicalAssembly(summaries.get(i).getMechanicalAssembly().getIdMechanicalAssembly());
+    	                	testeurEnProd.setTestStartTime(summaries.get(i).getTestStartTime());
+    	                	testeurEnProd.setDureeSeconde(difference);
+    	    	        	testeurEnProd.setTestStatus(summaries.get(i).getTestStatus());
+    	    	        	testeurEnProd.setDuree(getTime(summaries.get(i).getTestStartTime().getTime()));
+    	    	        	testeurEnProductionRepository.save(testeurEnProd);
+    	                }
+    	                else {
+        	    			//System.out.print("disfonctionnement " +i + "   "+ difference);
+    	                	dureeDisfonctionnementSeconde += difference;  
+        	    			//System.out.println("==>somme " + dureeDisfonctionnementSeconde);
+    	                	TesteurEnRepos testeurEnRepos = new TesteurEnRepos();
+    	                	testeurEnRepos.setIdSummary(summaries.get(i).getIdSummary());
+    	                	testeurEnRepos.setTesterID(listMachine.get(tester));
+    	                	testeurEnRepos.setIdMechanicalAssembly(summaries.get(i).getMechanicalAssembly().getIdMechanicalAssembly());
+    	                	testeurEnRepos.setTestStartTime(summaries.get(i).getTestStartTime());
+    	                	testeurEnRepos.setDureeSeconde(difference);
+    	    	        	testeurEnRepos.setDuree(getTime(summaries.get(i).getTestStartTime().getTime()));
+    	                	testeurEnRepos.setTestStatus(summaries.get(i).getTestStatus());
+    	                	testeurEnReposRepository.save(testeurEnRepos);
 
-    	List<Summary> summaries = productionRepository.listSummarydByDateTester(jour, testerID);
-    	if((dashboardRepository.listLigneByDateTester(jour, testerID)==0) ) {
-    		
-    		if(productionRepository.nbLignedByDateTester(jour, testerID)!=0) {
-	    		if(summaries.get(0).getTestStatus() == true) 
-	    			quantiteConforme++;
-	    		else 
-	    			quantiteNonConforme++;
-	        	
-	        	for(int i = 1; i< summaries.size(); i++) {
-	        		//Time timing = getTime(result.get(i).getTestStartTime().getTime()/1000);	
-	                //System.out.println(timing);
-	        		if(summaries.get(i).getTestStatus() == true) 
-	        			quantiteConforme++;
-	        		else 
-	        			quantiteNonConforme++;
-	    			int difference = (int) Math.abs(summaries.get(i).getTestStartTime().getTime()- summaries.get(i-1).getTestStartTime().getTime())/ 1000;
-	    			System.out.println(difference);
-	                if(difference < 180) {
-	                	dureeFonctionnementSeconde += difference;
-	                	TesteurEnProduction testeurEnProd = new TesteurEnProduction();
-	                	testeurEnProd.setIdSummary(summaries.get(i).getIdSummary());
-	                	testeurEnProd.setTesterID(summaries.get(i).getTesterID());
-	                	testeurEnProd.setIdMechanicalAssembly(summaries.get(i).getMechanicalAssembly().getIdMechanicalAssembly());
-	                	testeurEnProd.setTestStartTime(summaries.get(i).getTestStartTime());
-	                	testeurEnProd.setDureeSeconde(difference);
-	    	        	testeurEnProd.setTestStatus(summaries.get(i).getTestStatus());
-	    	        	testeurEnProd.setDuree(getTime(summaries.get(i).getTestStartTime().getTime()/1000));
-	    	        	testeurEnProductionRepository.save(testeurEnProd);
-	                }
-	                else {
-	                	dureeDisfonctionnementSeconde += difference;      
-	                	TesteurEnRepos testeurEnRepos = new TesteurEnRepos();
-	                	testeurEnRepos.setIdSummary(summaries.get(i).getIdSummary());
-	                	testeurEnRepos.setTesterID(summaries.get(i).getTesterID());
-	                	testeurEnRepos.setIdMechanicalAssembly(summaries.get(i).getMechanicalAssembly().getIdMechanicalAssembly());
-	                	testeurEnRepos.setTestStartTime(summaries.get(i).getTestStartTime());
-	                	testeurEnRepos.setDureeSeconde(difference);
-	                	testeurEnRepos.setDuree(getTime(summaries.get(i).getTestStartTime().getTime()/1000));
-	                	testeurEnRepos.setTestStatus(summaries.get(i).getTestStatus());
-	                	testeurEnReposRepository.save(testeurEnRepos);
-
-	                }
-	            }
+    	                }
+    	            }
 	    	    	Dashboard newLigne = new Dashboard();
 	    	    	newLigne.setDate(jour);
 	    	    	newLigne.setDureeDisfonctionnementSeconde(dureeDisfonctionnementSeconde);
 	    	    	newLigne.setDureeFonctionnementSeconde(dureeFonctionnementSeconde);
-	    	    	newLigne.setDatabase("vm");
+	    	    	newLigne.setDatabase("sircoSircover");
 	    	    	newLigne.setFinishTime(getTime(summaries.get(summaries.size() - 1).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setStartTime(getTime(summaries.get(0).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setQuantiteConforme(quantiteConforme);
 	    	    	newLigne.setQuantiteNonConforme(quantiteNonConforme);
-	    	    	newLigne.setTesteurId(testerID);
+	    	    	newLigne.setTesteurId(listMachine.get(tester));
 	    	    	newLigne.setDureeDisfonctionnement(getTime(dureeDisfonctionnementSeconde));
 	    	    	newLigne.setDureeFonctionnement(getTime(dureeFonctionnementSeconde));
 	    	    	dashboardRepository.save(newLigne);
-	    	       // System.out.println(newLigne);	
 	    		}
+        	}
+    		
     	}
-		return summaries;
 	}
 }

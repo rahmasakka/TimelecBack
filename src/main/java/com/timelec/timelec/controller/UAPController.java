@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.exception.ResourceNotFoundException;
-import com.timelec.timelec.models.Machine;
 import com.timelec.timelec.models.UAP;
 import com.timelec.timelec.repository.UAPRepository;
 
@@ -71,8 +70,8 @@ public class UAPController {
 	}
 	
 	
-	@RequestMapping(value="/listMachineByUAP/{IdUAP}",  method = RequestMethod.GET)
-	public List<Machine> listMachineByUAP(@PathVariable int IdUAP) {
-		return uapRepository.listMachineByUAP(IdUAP);
-	}	
+//	@RequestMapping(value="/listMachineByUAP/{IdUAP}",  method = RequestMethod.GET)
+//	public List<Machine> listMachineByUAP(@PathVariable int IdUAP) {
+//		return uapRepository.listMachineByUAP(IdUAP);
+//	}	
 }

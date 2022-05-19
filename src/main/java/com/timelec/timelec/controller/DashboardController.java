@@ -32,7 +32,7 @@ public class DashboardController {
 	public List<Dashboard> getDashboardByDateByDatabaseByTester(@PathVariable String database, @PathVariable Date dateDeb, @PathVariable int tester){
 		return repos.getDashboardByDateByDatabaseByTester(dateDeb, database, tester);
 	}
-	
+
 	//3 [database testerID !datedeb !datefin]
 	@RequestMapping(value="/database/{database}/tester/{tester}", method = RequestMethod.GET)
 	public List<Dashboard> getDashboardByDatabaseByTesterID(@PathVariable String database, @PathVariable int tester){
@@ -55,6 +55,7 @@ public class DashboardController {
 	//6 [database !testerID !datedeb !datefin]
 	@RequestMapping(value = "/database/{db}", method = RequestMethod.GET)
 	public List<Dashboard> getDashboardByDatabase(@PathVariable String db){
+		System.out.println(repos.getDashboardByDatabase(db).get(0).getDate());
 		return repos.getDashboardByDatabase(db);
 	}
 	

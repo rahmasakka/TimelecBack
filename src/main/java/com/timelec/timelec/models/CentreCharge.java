@@ -15,18 +15,18 @@ public class CentreCharge {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_CC")
+	@Column(name="Id_centre_de_charge")
 	private int IdCC;
 	
 	
-	@Column(name="CC_Name")
+	@Column(name="Nom_centre_de_charge")
 	private String CCName;
 	
-	@Column(name="CC_description")
+	@Column(name="Description_centre_charge")
 	private String CCDescription;
 	
 	@ManyToOne
-    @JoinColumn(name="UAP_ID")
+    @JoinColumn(name="ID_UAP")
     private UAP uap;
 
 	public int getIdCC() {

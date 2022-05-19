@@ -15,16 +15,16 @@ public class UAP {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="UAP_ID")
+	@Column(name="ID_UAP")
 	private int IdUAP;
 	
     @NotEmpty(message = "Name may not be empty")
-	@Column(name="UAP_Name")
+	@Column(name="Nom_UAP")
 	private String UapName;
 	
     
     @NotEmpty(message = "description may not be empty")
-	@Column(name="UAP_description")
+	@Column(name="description_UAP")
 	private String UapDescription;
 
 
@@ -58,14 +58,25 @@ public class UAP {
 	}
 
 
-	public UAP(int idUAP, String uapName, String uapDescription) {
+	
+    
+	public UAP(int idUAP, @NotEmpty(message = "Name may not be empty") String uapName,
+			@NotEmpty(message = "description may not be empty") String uapDescription) {
 		super();
 		IdUAP = idUAP;
 		UapName = uapName;
 		UapDescription = uapDescription;
-	}	
-    
-    
+	}
+
+
+	public UAP(@NotEmpty(message = "Name may not be empty") String uapName,
+			@NotEmpty(message = "description may not be empty") String uapDescription) {
+		super();
+		UapName = uapName;
+		UapDescription = uapDescription;
+	}
+
+
 	public UAP() {
 		super();
 	}	
