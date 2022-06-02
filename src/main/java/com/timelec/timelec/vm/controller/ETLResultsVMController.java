@@ -43,12 +43,9 @@ public class ETLResultsVMController {
 	
 	
 	public String getTime(long totalSecs) {
-	//	long jour = (totalSecs / 3600) /24 ;
 		long heures = (totalSecs / 3600) %24;
 		long minutes = (totalSecs % 3600) / 60;
 		long seconds = totalSecs % 60;
-		//System.out.println("jour " + jour);  
-		//System.out.println(heures + ":" + minutes + ":" + seconds);  
 		return(heures + ":" + minutes + ":" + seconds);
 		
 	}
@@ -86,9 +83,7 @@ public class ETLResultsVMController {
     	        			quantiteNonConforme++;
     	    			int difference = (int) Math.abs(summaries.get(i).getTestStartTime().getTime()- summaries.get(i-1).getTestStartTime().getTime())/ 1000;
     	                if (difference < listMachine.get(tester).getTauxFonctionnement() * 60) {
-        	    			//System.out.print("fonctionnement " +i + "   "+ difference);
     	                	dureeFonctionnementSeconde += difference;
-        	    			//System.out.println("======> somme " + dureeFonctionnementSeconde);
     	                	TesteurEnProduction testeurEnProd = new TesteurEnProduction();
     	                	testeurEnProd.setIdSummary(summaries.get(i).getIdSummary());
     	                	testeurEnProd.setTesterID(listMachine.get(tester));
@@ -100,9 +95,7 @@ public class ETLResultsVMController {
     	    	        	testeurEnProductionRepository.save(testeurEnProd);
     	                }
     	                else {
-        	    			//System.out.print("disfonctionnement " +i + "   "+ difference);
     	                	dureeDisfonctionnementSeconde += difference;  
-        	    			//System.out.println("==>somme " + dureeDisfonctionnementSeconde);
     	                	TesteurEnRepos testeurEnRepos = new TesteurEnRepos();
     	                	testeurEnRepos.setIdSummary(summaries.get(i).getIdSummary());
     	                	testeurEnRepos.setTesterID(listMachine.get(tester));

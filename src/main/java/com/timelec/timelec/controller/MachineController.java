@@ -3,9 +3,9 @@ package com.timelec.timelec.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +27,13 @@ public class MachineController {
 	@Autowired
 	MachineRepository machineRepository;
 	
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public List<Machine>getAllMachines(){
 		return machineRepository.findAll();
 	}
 	
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Machine getMachineById(@PathVariable int id) {
 		Machine machine = machineRepository.findById(id).
@@ -41,7 +41,7 @@ public class MachineController {
 		return machine;
 	}
 	
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "/create")
 	public Machine addMachine(@RequestBody Machine machine) {
 	    Machine machine1 = machineRepository.save(machine);
@@ -49,6 +49,7 @@ public class MachineController {
 	}
 	
 	
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Machine> updateMachine(@PathVariable int id, @RequestBody Machine machine){
 		Machine machine1 = machineRepository.findById(id)
@@ -62,7 +63,7 @@ public class MachineController {
 		return ResponseEntity.ok(machineUpdate);
 	}
 	
-	//modifier l'etat de la machine (par reference)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/updateReferenceMachineFalse/{idCC}", method = RequestMethod.PUT)
 	public ResponseEntity<Machine> updateReferenceMachineFalse(@PathVariable int idCC){
 		List<Machine> machines = machineRepository.listMachineByCC(idCC);
@@ -76,6 +77,7 @@ public class MachineController {
 	}
 	
 	//modifier l'etat de la machine (par reference)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/updateReferenceMachine/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Machine> updateReferenceMachine(@PathVariable int id){
 		Machine machine1 = machineRepository.findById(id)
@@ -85,7 +87,8 @@ public class MachineController {
 		return ResponseEntity.ok(machineUpdate);
 	}
 	
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+
 	//selectionner la machine réferencée par centre de charge 
 	@RequestMapping(value="/referenced/{centreChargeId}", method = RequestMethod.GET)
 	public Machine machineReferencedToCentreCharge(@PathVariable int centreChargeId){
@@ -93,14 +96,15 @@ public class MachineController {
 		return machineReference;
 	}
 
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+
 	//selectionner la liste des machines par centre de charge 
 	@RequestMapping(value = "/sonByMother/{id}", method = RequestMethod.GET)
 	public List<Machine>listMachineByCC(@PathVariable int id){
 		return machineRepository.listMachineByCC(id);
 	}
-	
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Map<String, Boolean>> deleteMachine(@PathVariable int id){
 		Machine machine = machineRepository.findById(id)
@@ -111,15 +115,9 @@ public class MachineController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
-	@RequestMapping(value = "/listTesteurReferencedByCentreCharge/{id}", method = RequestMethod.GET)
-	public List<Machine>listTesteurReferencedByCentreCharge(@PathVariable int id){
-		return machineRepository.listTesteurReferencedByCentreCharge(id);
-	}
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@RequestMapping(value = "/listTesteurReferenced", method = RequestMethod.GET)
 	public List<Machine>listTesteurReferenced(){
 		return machineRepository.listTesteurReferenced();
 	}
-	
 }

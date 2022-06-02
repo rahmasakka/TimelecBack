@@ -17,16 +17,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.timelec.timelec.exception.ResourceNotFoundException;
 import com.timelec.timelec.models.ERole;
 import com.timelec.timelec.models.Role;
 import com.timelec.timelec.models.User;
+import com.timelec.timelec.models.UserExcelExporter;
 import com.timelec.timelec.payload.request.SignupRequest;
 import com.timelec.timelec.payload.response.MessageResponse;
 import com.timelec.timelec.repository.RoleRepository;
 import com.timelec.timelec.repository.UserRepository;
+
+
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+ 
+import javax.servlet.http.HttpServletResponse;
+ 
 
 @CrossOrigin
 @RestController
@@ -42,11 +55,14 @@ public class UserController {
     @Autowired
 	PasswordEncoder encoder;
 	
+   
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@GetMapping("/all")
 	public List<User>getAllUsers(){
 		return userRepository.findAll();
 	}
 	
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public User getUserById(@PathVariable Long id) {
 		
@@ -55,6 +71,7 @@ public class UserController {
 		return user;
 	}
 	
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/createUser")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -103,7 +120,7 @@ public class UserController {
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 	
-	
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody User userDetails){
 		User user = userRepository.findById(id)
@@ -116,6 +133,7 @@ public class UserController {
 		
 	}
 	
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id){
 		User user = userRepository.findById(id)
@@ -130,4 +148,18 @@ public class UserController {
 	public List<Role>getAllRoles(){
 		return roleRepository.findAll();
 	}		
+	
+	
+	@GetMapping("/export/excel")
+	public void exportToExcel(HttpServletResponse response) throws IOException, ParseException {
+	    response.setContentType("application/octet-stream");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey, headerValue);
+		List<User> listUsers = userRepository.findAll();
+		UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
+		excelExporter.export(response);    
+	}  
 }

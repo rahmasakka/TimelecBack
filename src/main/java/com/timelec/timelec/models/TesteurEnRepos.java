@@ -27,7 +27,7 @@ public class TesteurEnRepos {
 //	private Long testerID;
 	
     @ManyToOne
-    @JoinColumn(name="Tester_ID")
+    @JoinColumn(name="ID_machine")
     private Machine testerID;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

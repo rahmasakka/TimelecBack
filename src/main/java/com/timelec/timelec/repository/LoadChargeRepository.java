@@ -12,7 +12,6 @@ import com.timelec.timelec.models.UAP;
 
 @Repository
 public interface LoadChargeRepository extends JpaRepository <CentreCharge, Integer> {
-	
 	@Query(value = "SELECT * FROM centre_charge where ID_UAP = ?1", nativeQuery = true)
 	List<CentreCharge> listCCByUAP(UAP IdUAP);
 }

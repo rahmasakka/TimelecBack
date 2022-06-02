@@ -101,8 +101,45 @@ public class DashboardController {
 	public List<Object> listTesters(){
 		return repos.listTesters();
 	}
+		
+	
+	@RequestMapping(value="/dashboardByUAP/{idUAP}/{date}", method = RequestMethod.GET)
+	public List<Object> dashboardByUAP(@PathVariable int idUAP, @PathVariable Date date){
+		return repos.dashboardByUAP(idUAP, date);
+	}
+	
+	@RequestMapping(value="/GroupByDateUAP/dateDeb/{dateDeb}/dateFin/{dateFin}", method=RequestMethod.GET)
+	public List<Object>GroupByDateUAP(@PathVariable Date dateDeb, @PathVariable Date dateFin){
+		return repos.GroupByUAP(dateDeb, dateFin);
+	}
 
 	
+	@RequestMapping(value="/GroupByDateUAPBytester/dateDeb/{dateDeb}/dateFin/{dateFin}/tester/{tester}", method=RequestMethod.GET)
+	public List<Object>GroupByDateUAPByTester(@PathVariable Date dateDeb, @PathVariable Date dateFin, @PathVariable int tester){
+		return repos.GroupByDateUAPByTester(dateDeb, dateFin, tester);
+	}
 	
 	
+	@RequestMapping(value="/sommeGlobale/dateDeb/{dateDeb}/dateFin/{dateFin}", method=RequestMethod.GET)
+	public List<Object>test(@PathVariable Date dateDeb, @PathVariable Date dateFin){
+		return repos.test(dateDeb, dateFin);
+	}
+	
+	@RequestMapping(value="dashboardByUAP/{idUAP}/dateDeb/{dateDeb}/dateFin/{dateFin}", method = RequestMethod.GET)
+	public List<Object>dashboardByUAP(@PathVariable Date dateDeb, @PathVariable Date dateFin, @PathVariable int idUAP){
+		return repos.dashboardByUAP(dateDeb, dateFin, idUAP); 
+	}
+	
+	
+	@RequestMapping(value="dashboardByUAPDetails/{idUAP}/dateDeb/{dateDeb}/dateFin/{dateFin}", method = RequestMethod.GET)
+	public List<Object>dashboardByUAPDetails(@PathVariable Date dateDeb, @PathVariable Date dateFin, @PathVariable int idUAP){
+		return repos.dashboardByUAPDetails(dateDeb, dateFin, idUAP); 
+	}
+	
+	
+	@RequestMapping(value="dashboardByCentreCharge/{idCC}/dateDeb/{dateDeb}/dateFin/{dateFin}", method = RequestMethod.GET)
+	public List<Object>dashboardByCentreCharge(@PathVariable Date dateDeb, @PathVariable Date dateFin, @PathVariable int idCC){
+		return repos.dashboardByCentreCharge(dateDeb, dateFin, idCC); 
+	}
+		
 }
