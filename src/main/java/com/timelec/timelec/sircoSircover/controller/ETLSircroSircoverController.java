@@ -44,22 +44,16 @@ public class ETLSircroSircoverController {
 	
 	
 	public String getTime(long totalSecs) {
-	//	long jour = (totalSecs / 3600) /24 ;
 		long heures = (totalSecs / 3600) %24;
 		long minutes = (totalSecs % 3600) / 60;
 		long seconds = totalSecs % 60;
-		//System.out.println("jour " + jour);  
-		//System.out.println(heures + ":" + minutes + ":" + seconds);  
 		return(heures + ":" + minutes + ":" + seconds);
-		
 	}
-	
 	
 	@GetMapping("/test/{nbSeconde}")
 	private String calcul(@PathVariable long nbSeconde) {
 		return getTime(nbSeconde);
 	}
-	
 	
     @GetMapping("/{jour}")
 	private void ETL(@PathVariable Date jour) {   

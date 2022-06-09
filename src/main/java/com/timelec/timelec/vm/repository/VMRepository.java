@@ -15,8 +15,6 @@ import com.timelec.timelec.vm.model.Summary;
 
 @Repository
 public interface VMRepository extends JpaRepository<Summary, Long>{
-
-	//Page<Summary> findAll();
 	
 	Page<Summary>findByTestStartTime(Timestamp jour, Pageable page);
 	
@@ -25,6 +23,9 @@ public interface VMRepository extends JpaRepository<Summary, Long>{
 
 	@Query(value = "select * from table_summary where Convert(Test_start_time, date) = ?1", nativeQuery = true)
 	Page<Summary> findByDate(Date jour, Pageable page);
+	
+	@Query(value = "select * from table_summary where Convert(Test_start_time, date) = ?1", nativeQuery = true)
+	List<Summary> findByDate1(Date jour);
 	
 	@Query(value = "select * from table_summary where Tester_ID = ?2 and Convert(Test_start_time, date) = ?1", nativeQuery = true)
 	Page<Summary> findByDateTesterID(Date jour, Long testerID, Pageable page);
@@ -35,7 +36,11 @@ public interface VMRepository extends JpaRepository<Summary, Long>{
 
 	@Query(value="select * from table_summary" + 
 			"	where Convert(Test_start_time, date) >= ?1 and Convert(Test_start_time, date) <= ?2", nativeQuery = true)
-	Page<Summary> listSummaryBetweenTwoDays(Date jour1, Date jour2, Pageable page );
+	Page<Summary> listSummaryBetweenTwoDaysPageable(Date jour1, Date jour2, Pageable page );
+	
+	@Query(value="select * from table_summary " + 
+			"	where Convert(Test_start_time, date) >= ?1 and Convert(Test_start_time, date) <= ?2", nativeQuery = true)
+	List<Summary> listSummaryBetweenTwoDays(Date jour1, Date jour2);
 	
 	@Query(value="select * from table_summary" + 
 			"	where Convert(Test_start_time, date) >= ?1 and Convert(Test_start_time, date) <= ?2 and Tester_ID = ?3 ", nativeQuery = true)

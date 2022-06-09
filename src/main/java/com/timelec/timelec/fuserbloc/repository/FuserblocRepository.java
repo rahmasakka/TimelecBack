@@ -16,7 +16,6 @@ import com.timelec.timelec.fuserbloc.model.Summary;
 
 @Repository
 public interface FuserblocRepository extends JpaRepository<Summary, Long> {
-	//Page<Summary> findAll();
 	
 	Page<Summary>findByTestStartTime(Timestamp jour, Pageable page);
 	

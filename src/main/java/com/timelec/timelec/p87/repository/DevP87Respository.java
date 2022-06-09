@@ -16,9 +16,7 @@ import com.timelec.timelec.p87.model.Summary;
 
 @Repository
 public interface DevP87Respository extends JpaRepository<Summary, Long> {
-	
-	//Page<Summary> findAll();
-	
+		
 	Page<Summary>findByTestStartTime(Timestamp jour, Pageable page);
 	
 	@Query(value="select * FROM table_summary where Tester_ID = ?1", nativeQuery = true)
@@ -53,5 +51,4 @@ public interface DevP87Respository extends JpaRepository<Summary, Long> {
 	
 	@Query(value="SELECT distinct(Tester_ID) FROM table_summary;", nativeQuery = true)
 	List<Object>listTesterIdByDatabase();
-
 }

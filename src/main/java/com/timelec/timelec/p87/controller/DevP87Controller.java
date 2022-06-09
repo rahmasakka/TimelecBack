@@ -35,15 +35,6 @@ public class DevP87Controller {
 			return productionService.getSummary(pageNumber, pageSize);
 		}
 	    
-	   /* 
-		@GetMapping("/{id}")
-		public Summary getProductionById(@PathVariable Long id) {
-			Summary prod = productionRepository.findById(id).
-					orElseThrow(() -> new ResourceNotFoundException("summary not exist with id:" + id));
-			return prod;
-		}
-		*/
-
 		@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 		public Page<Summary>getSummaryWithTesterID1(@PathVariable Long testerID ,@RequestParam int pageNumber,@RequestParam int pageSize){
 			Page<Summary> listSummaryByTester = productionService.findByTesterIDPageable(testerID, pageNumber, pageSize);
@@ -52,13 +43,11 @@ public class DevP87Controller {
 		
 		@RequestMapping(value="/testStartTime/{jour}", method = RequestMethod.GET)
 		public Page<Summary>getSummaryByStartTime(@PathVariable Date jour, @RequestParam int pageNumber, @RequestParam int pageSize){
-			//System.out.println("nb de ligne: " + productionRepository.findByDate(jour).size());
 			return productionService.findByDate(jour, pageNumber, pageSize);
 		}
 		
 		@RequestMapping(value="/testStartTime/{jour}/testerID/{testerID}", method = RequestMethod.GET)
 		public Page<Summary>getSummaryByTesterStartTime(@PathVariable Date jour, @PathVariable Long testerID, @RequestParam int pageNumber, @RequestParam int pageSize){
-			//System.out.println("nb de ligne: "+ productionRepository.findByDateTesterID(jour, testerID).size());
 			return productionService.findByDateTesterID(jour, testerID, pageNumber, pageSize);
 		}
 		
@@ -82,7 +71,6 @@ public class DevP87Controller {
 			System.out.println(nb_heure + ":" + nb_minute + ":" + difference );
 			return fin - debut;
 		}
-		
 		
 		@RequestMapping(value="/{jour1}/{jour2}", method = RequestMethod.GET)
 		Page<Summary>listSummaryBetweenTwoDays(@RequestParam int pageNumber, @RequestParam int pageSize, @PathVariable Date jour1, @PathVariable Date jour2){

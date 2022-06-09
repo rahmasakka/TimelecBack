@@ -31,7 +31,6 @@ public class UAPController {
 		return uapRepository.findAll();
 	}
 	
-	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public UAP getUAPById(@PathVariable int id) {
 		UAP uap = uapRepository.findById(id).
@@ -39,13 +38,11 @@ public class UAPController {
 		return uap;
 	}
 	
-	
 	@PostMapping(path = "/create")
 	public UAP add(@RequestBody UAP uap) {
 	    UAP uap1 = uapRepository.save(uap);
 	  	return uap1;
-	}
-	
+	}	
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Map<String, Boolean>> deleteUap(@PathVariable int id){
@@ -55,8 +52,7 @@ public class UAPController {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
-	}
-	
+	}	
 	
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<UAP> updateUap(@PathVariable int id, @RequestBody UAP uapDetails){
@@ -68,10 +64,4 @@ public class UAPController {
 		UAP updateUAP = uapRepository.save(uap);
 		return ResponseEntity.ok(updateUAP);
 	}
-	
-	
-//	@RequestMapping(value="/listMachineByUAP/{IdUAP}",  method = RequestMethod.GET)
-//	public List<Machine> listMachineByUAP(@PathVariable int IdUAP) {
-//		return uapRepository.listMachineByUAP(IdUAP);
-//	}	
 }

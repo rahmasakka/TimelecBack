@@ -16,7 +16,6 @@ import com.timelec.timelec.vm.model.Summary;
 import com.timelec.timelec.vm.repository.VMRepository;
 import com.timelec.timelec.vm.service.ResultsVMService;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api/vm")
@@ -29,20 +28,10 @@ public class VMController {
     @Autowired 
     private ResultsVMService productionService;
     
-    
     @GetMapping("/all")
 	Page<Summary> listSummary(@RequestParam int pageNumber,@RequestParam int pageSize){
 		return productionService.getSummary(pageNumber, pageSize);
 	}
-    
-   /* 
-	@GetMapping("/{id}")
-	public Summary getProductionById(@PathVariable Long id) {
-		Summary prod = productionRepository.findById(id).
-				orElseThrow(() -> new ResourceNotFoundException("summary not exist with id:" + id));
-		return prod;
-	}
-	*/
 
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryWithTesterID1(@PathVariable Long testerID ,@RequestParam int pageNumber,@RequestParam int pageSize){
@@ -52,13 +41,11 @@ public class VMController {
 	
 	@RequestMapping(value="/testStartTime/{jour}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryByStartTime(@PathVariable Date jour, @RequestParam int pageNumber, @RequestParam int pageSize){
-		//System.out.println("nb de ligne: " + productionRepository.findByDate(jour).size());
 		return productionService.findByDate(jour, pageNumber, pageSize);
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}/testerID/{testerID}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryByTesterStartTime(@PathVariable Date jour, @PathVariable Long testerID, @RequestParam int pageNumber, @RequestParam int pageSize){
-		//System.out.println("nb de ligne: "+ productionRepository.findByDateTesterID(jour, testerID).size());
 		return productionService.findByDateTesterID(jour, testerID, pageNumber, pageSize);
 	}
 	
@@ -66,7 +53,6 @@ public class VMController {
 	public List<Time> calculeSecond(@PathVariable Date jour, @PathVariable Long testerID){
 		return productionRepository.calculeSecond(jour, testerID);
 	}
-	
 	
 	@RequestMapping(value="/calcul/{jour}/testerID/{testerID}")
 	public Integer calculNbSecondFinDebut(@PathVariable Date jour, @PathVariable Long testerID) {
@@ -83,7 +69,6 @@ public class VMController {
 		return fin - debut;
 	}
 	
-	
 	@RequestMapping(value="/{jour1}/{jour2}", method = RequestMethod.GET)
 	Page<Summary>listSummaryBetweenTwoDays(@RequestParam int pageNumber, @RequestParam int pageSize, @PathVariable Date jour1, @PathVariable Date jour2){
 		return productionService.listSummaryBetweenTwoDays(jour1, jour2, pageNumber, pageSize);
@@ -99,7 +84,6 @@ public class VMController {
 		return productionService.findByYear(year, pageNumber, pageSize);
 	}
 	
-
 	@RequestMapping(value="/month/{month}", method = RequestMethod.GET)
 	Page<Summary> findByMonth(@RequestParam int pageNumber,@RequestParam int pageSize, @PathVariable int month) {
 		return productionService.findByMonth(month, pageNumber, pageSize);
@@ -113,5 +97,6 @@ public class VMController {
 	@RequestMapping(value="/listeTesterIdByDatabase", method = RequestMethod.GET)
 	public List<Object>listetesterId(){
 		return productionRepository.listTesterIdByDatabase();
-	}
+	}	
+
 }

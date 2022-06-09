@@ -36,14 +36,12 @@ public class SircoSircoverController {
 		return productionService.getSummary(pageNumber, pageSize);
 	}
     
-    
 	@GetMapping("/{id}")
 	public Summary getProductionById(@PathVariable Long id) {
 		Summary prod = productionRepository.findById(id).
 				orElseThrow(() -> new ResourceNotFoundException("summary not exist with id:" + id));
 		return prod;
 	}
-	
 
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryWithTesterID1(@PathVariable Long testerID ,@RequestParam int pageNumber,@RequestParam int pageSize){
@@ -52,34 +50,15 @@ public class SircoSircoverController {
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}", method = RequestMethod.GET)
-	public Page<Summary>getSummaryByStartTime(@PathVariable Date jour, @RequestParam int pageNumber, @RequestParam int pageSize){
-		//System.out.println("nb de ligne: " + productionRepository.findByDate(jour).size());
-		
+	public Page<Summary>getSummaryByStartTime(@PathVariable Date jour, @RequestParam int pageNumber, @RequestParam int pageSize){	
 		return productionService.findByDate(jour, pageNumber, pageSize);
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}/testerID/{testerID}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryByTesterStartTime(@PathVariable Date jour, @PathVariable Long testerID, @RequestParam int pageNumber, @RequestParam int pageSize){
-		//System.out.println("nb de ligne: "+ productionRepository.findByDateTesterID(jour, testerID).size());
 		return productionService.findByDateTesterID(jour, testerID, pageNumber, pageSize);
 	}
 	
-	/*
-	@RequestMapping(value="/calcul/{jour}/testerID/{testerID}")
-	public Integer calculNbSecondFinDebut(@PathVariable Date jour, @PathVariable Long testerID) {
-		List<Time> Result = calculeSecond(jour, testerID );
-		System.out.println("nb de ligne (count(*)) "+ Result.size());
-		int debut = (int) (Result.get(0).getTime() / 1000); //nb seconde
-		int fin =  (int) (Result.get(Result.size()-1).getTime() / 1000); //nb seconde
-		int difference = fin - debut;
-		int nb_heure = difference / (60*60);
-		difference = difference - (nb_heure * 60 *60) ;
-		int nb_minute = difference / (60);
-		difference = difference - (nb_minute * 60);		
-		System.out.println(nb_heure + ":" + nb_minute + ":" + difference );
-		return fin - debut;
-	}
-	*/
 	@RequestMapping(value="/{jour1}/{jour2}", method = RequestMethod.GET)
 	Page<Summary>listSummaryBetweenTwoDays(@RequestParam int pageNumber, @RequestParam int pageSize, @PathVariable Date jour1, @PathVariable Date jour2){
 		return productionService.listSummaryBetweenTwoDays(jour1, jour2, pageNumber, pageSize);
@@ -95,7 +74,6 @@ public class SircoSircoverController {
 		return productionService.findByYear(year, pageNumber, pageSize);
 	}
 	
-
 	@RequestMapping(value="/month/{month}", method = RequestMethod.GET)
 	Page<Summary> findByMonth(@RequestParam int pageNumber,@RequestParam int pageSize, @PathVariable int month) {
 		return productionService.findByMonth(month, pageNumber, pageSize);

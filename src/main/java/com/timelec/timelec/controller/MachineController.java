@@ -46,8 +46,7 @@ public class MachineController {
 	public Machine addMachine(@RequestBody Machine machine) {
 	    Machine machine1 = machineRepository.save(machine);
 	  	return machine1;
-	}
-	
+	}	
 	
     @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
@@ -88,7 +87,6 @@ public class MachineController {
 	}
 	
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-
 	//selectionner la machine réferencée par centre de charge 
 	@RequestMapping(value="/referenced/{centreChargeId}", method = RequestMethod.GET)
 	public Machine machineReferencedToCentreCharge(@PathVariable int centreChargeId){
@@ -97,14 +95,13 @@ public class MachineController {
 	}
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-
 	//selectionner la liste des machines par centre de charge 
 	@RequestMapping(value = "/sonByMother/{id}", method = RequestMethod.GET)
 	public List<Machine>listMachineByCC(@PathVariable int id){
 		return machineRepository.listMachineByCC(id);
 	}
+    
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Map<String, Boolean>> deleteMachine(@PathVariable int id){
 		Machine machine = machineRepository.findById(id)

@@ -72,7 +72,7 @@ public class UserController {
 	}
 	
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/createUser")
+	@PostMapping("/create")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
@@ -160,6 +160,6 @@ public class UserController {
 		response.setHeader(headerKey, headerValue);
 		List<User> listUsers = userRepository.findAll();
 		UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
-		excelExporter.export(response);    
+		excelExporter.export1(response);    
 	}  
 }

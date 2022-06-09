@@ -15,8 +15,6 @@ import com.timelec.timelec.sircoSircover.model.Summary;
 
 @Repository
 public interface SircoSircoverRepository extends JpaRepository<Summary, Long>{
-
-	//Page<Summary> findAll();
 	
 	Page<Summary>findByTestStartTime(Timestamp jour, Pageable page);
 	

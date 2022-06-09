@@ -43,7 +43,6 @@ public class P77Controller {
 				orElseThrow(() -> new ResourceNotFoundException("summary not exist with id:" + id));
 		return prod;
 	}
-	
 
 	@RequestMapping(value = "/testerID/{testerID}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryWithTesterID1(@PathVariable Long testerID ,@RequestParam int pageNumber,@RequestParam int pageSize){
@@ -52,15 +51,12 @@ public class P77Controller {
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}", method = RequestMethod.GET)
-	public Page<Summary>getSummaryByStartTime(@PathVariable Date jour, @RequestParam int pageNumber, @RequestParam int pageSize){
-		//System.out.println("nb de ligne: " + productionRepository.findByDate(jour).size());
-		
+	public Page<Summary>getSummaryByStartTime(@PathVariable Date jour, @RequestParam int pageNumber, @RequestParam int pageSize){		
 		return productionService.findByDate(jour, pageNumber, pageSize);
 	}
 	
 	@RequestMapping(value="/testStartTime/{jour}/testerID/{testerID}", method = RequestMethod.GET)
 	public Page<Summary>getSummaryByTesterStartTime(@PathVariable Date jour, @PathVariable Long testerID, @RequestParam int pageNumber, @RequestParam int pageSize){
-		//System.out.println("nb de ligne: "+ productionRepository.findByDateTesterID(jour, testerID).size());
 		return productionService.findByDateTesterID(jour, testerID, pageNumber, pageSize);
 	}
 	
@@ -76,11 +72,6 @@ public class P77Controller {
 		int debut = (int) (Result.get(0).getTime() / 1000); //nb seconde
 		int fin =  (int) (Result.get(Result.size()-1).getTime() / 1000); //nb seconde
 		int difference = fin - debut;
-/*
-		System.out.println("debut en seconde: "+ debut );
-		System.out.println("fin en seconde: "+ fin );
-		System.out.println("difference en seconde: "+ difference );
-*/
 		int nb_heure = difference / (60*60);
 		difference = difference - (nb_heure * 60 *60) ;
 		int nb_minute = difference / (60);

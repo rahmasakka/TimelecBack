@@ -46,8 +46,7 @@ public class ETLResultsVMController {
 		long heures = (totalSecs / 3600) %24;
 		long minutes = (totalSecs % 3600) / 60;
 		long seconds = totalSecs % 60;
-		return(heures + ":" + minutes + ":" + seconds);
-		
+		return(heures + ":" + minutes + ":" + seconds);	
 	}
 	
 	
@@ -55,7 +54,6 @@ public class ETLResultsVMController {
 	private String calcul(@PathVariable long nbSeconde) {
 		return getTime(nbSeconde);
 	}
-	
 	
     @GetMapping("/{jour}")
 	private void ETL(@PathVariable Date jour) {   

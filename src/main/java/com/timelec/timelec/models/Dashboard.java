@@ -1,6 +1,7 @@
 package com.timelec.timelec.models;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,14 +30,9 @@ public class Dashboard {
 	@Column(name="Test_start_time")
 	private Date date;	
     
-//    @Column(name="tester_id")
-//    private int testeurId;
-
-    
     @ManyToOne
     @JoinColumn(name="ID_Machine")
     private Machine testeurId;
-    
     
     @Column(name="quantite_conforme")
     private long quantiteConforme;

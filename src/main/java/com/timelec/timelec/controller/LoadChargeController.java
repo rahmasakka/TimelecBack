@@ -70,7 +70,5 @@ public class LoadChargeController {
 	@RequestMapping(value="/sonByMother/{IdUAP}",  method = RequestMethod.GET)
 	public List<CentreCharge> listCCByUAP(@PathVariable UAP IdUAP) {
 		return loadChargeRepository.listCCByUAP(IdUAP);
-	}
-	
-	
+	}	
 }
