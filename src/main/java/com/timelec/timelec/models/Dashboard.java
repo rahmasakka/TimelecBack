@@ -25,10 +25,10 @@ public class Dashboard {
 	@Column(name="ID")
 	private Long id;
 	
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd", timezone="Europe/Paris")
+//    @Temporal(TemporalType.DATE)
+//    @JsonFormat(pattern="yyyy-MM-dd", timezone="Europe/Paris")
 	@Column(name="Test_start_time")
-	private Date date;	
+	private String date;	
     
     @ManyToOne
     @JoinColumn(name="ID_Machine")
@@ -68,7 +68,7 @@ public class Dashboard {
 	}
 
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
@@ -128,7 +128,7 @@ public class Dashboard {
 	}
 
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -182,7 +182,7 @@ public class Dashboard {
 		this.finishTime = finishTime;
 	}
 
-	public Dashboard(Long id, Date date, Machine testeurId, long quantiteConforme, long quantiteNonConforme,
+	public Dashboard(Long id, String date, Machine testeurId, long quantiteConforme, long quantiteNonConforme,
 			long dureeFonctionnementSeconde, long dureeDisfonctionnementSeconde, String dureeFonctionnement,
 			String dureeDisfonctionnement, String database, String startTime, String finishTime) {
 		super();

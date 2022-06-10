@@ -1,6 +1,5 @@
 package com.timelec.timelec.vm.controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import com.timelec.timelec.repository.DashboardRepository;
 import com.timelec.timelec.repository.MachineRepository;
 import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
+import com.timelec.timelec.service.EmailSenderService;
 import com.timelec.timelec.vm.model.Summary;
 import com.timelec.timelec.vm.repository.ETLVMRepository;
 
@@ -41,6 +41,10 @@ public class ETLResultsVMController {
 	@Autowired
 	private MachineRepository machineRepository;
 	
+	@Autowired
+	private EmailSenderService senderService;
+ 
+	
 	
 	public String getTime(long totalSecs) {
 		long heures = (totalSecs / 3600) %24;
@@ -56,7 +60,7 @@ public class ETLResultsVMController {
 	}
 	
     @GetMapping("/{jour}")
-	private void ETL(@PathVariable Date jour) {   
+	public void ETL(@PathVariable String jour) {   
     	
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
@@ -123,5 +127,7 @@ public class ETLResultsVMController {
         	}
     		
     	}
+		senderService.sendEmail("rahmasakka3@gmail.com", "iData", "VM de la date " + jour+ " chargé avec succès");
+
 	}
 }
