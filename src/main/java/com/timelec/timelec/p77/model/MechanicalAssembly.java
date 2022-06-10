@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "table_mechanical_assembly")
 public class MechanicalAssembly {
 
-	//int(10)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID_mechanical_assembly")
