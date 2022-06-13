@@ -1,6 +1,7 @@
 package com.timelec.timelec.gabarie.repository;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,9 @@ public interface ProductionRepository extends JpaRepository<Production, Integer>
 	
 	@Query(value="SELECT * FROM production where convert(Date, date) >= ?1 and convert(Date, date) <= ?2", nativeQuery = true)
 	Page<Production> productionbetweenTwoDates(Date dateDeb, Date dateFin, Pageable page);
+	
+	@Query(value="SELECT * FROM production where convert(Date, date) >= ?1 and convert(Date, date) <= ?2", nativeQuery = true)
+	List<Production> productionbetweenTwoDate(Date dateDeb, Date dateFin);
 	
 	@Query(value="SELECT * FROM production where convert(Date, date) = ?1 and OF = ?2 ", nativeQuery = true)
 	Page<Production> productionDateOF(Date jour, Integer of, Pageable page);

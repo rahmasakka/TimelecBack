@@ -1,7 +1,6 @@
 package com.timelec.timelec.gabarie.controller;
 
 import java.sql.Date;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.timelec.timelec.gabarie.model.Production;
-import com.timelec.timelec.gabarie.repository.ProductionRepository;
 import com.timelec.timelec.gabarie.service.ProductionService;
 
 @CrossOrigin
@@ -20,14 +18,11 @@ import com.timelec.timelec.gabarie.service.ProductionService;
 public class ProductionController {
 	
 	@Autowired
-	ProductionRepository productionRepository;
-	
-	@Autowired
 	ProductionService productionService;
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public List<Production>getAllProductions(){
-		return productionRepository.findAll();
+	public Page<Production>getAllProductions(@RequestParam int pageNumber, @RequestParam int pageSize){
+		return productionService.getAll(pageNumber, pageSize);
 	}
 	
 	@RequestMapping(value = "date/{jour}", method = RequestMethod.GET)

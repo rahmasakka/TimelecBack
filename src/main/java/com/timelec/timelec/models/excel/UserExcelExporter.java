@@ -1,4 +1,4 @@
-package com.timelec.timelec.models;
+package com.timelec.timelec.models.excel;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.timelec.timelec.models.User;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;

@@ -24,7 +24,7 @@ import com.timelec.timelec.exception.ResourceNotFoundException;
 import com.timelec.timelec.models.ERole;
 import com.timelec.timelec.models.Role;
 import com.timelec.timelec.models.User;
-import com.timelec.timelec.models.UserExcelExporter;
+import com.timelec.timelec.models.excel.UserExcelExporter;
 import com.timelec.timelec.payload.request.SignupRequest;
 import com.timelec.timelec.payload.response.MessageResponse;
 import com.timelec.timelec.repository.RoleRepository;

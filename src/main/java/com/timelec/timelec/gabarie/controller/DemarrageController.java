@@ -1,8 +1,6 @@
 package com.timelec.timelec.gabarie.controller;
 
 import java.sql.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,23 +11,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.gabarie.model.Demarrage;
-import com.timelec.timelec.gabarie.repository.DemarrageRepository;
 import com.timelec.timelec.gabarie.service.DemarrageService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/gabarie/demarrage")
+@RequestMapping("/api/gabarie/demarrage/")
 public class DemarrageController {
-	
-	@Autowired
-	DemarrageRepository demarrageRepository;
 		
 	@Autowired
 	DemarrageService demarrageService;
 	
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public List<Demarrage>getAllDemarrage(){
-		return demarrageRepository.findAll();
+	@RequestMapping(value = "all", method = RequestMethod.GET)
+	public Page<Demarrage>getAllDemarrage(@RequestParam int pageNumber, @RequestParam int pageSize){
+		return demarrageService.getAll(pageNumber, pageSize);
 	}
 		
 	@RequestMapping(value = "date/{jour}", method = RequestMethod.GET)

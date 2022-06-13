@@ -16,6 +16,11 @@ public class DemarrageService {
 	@Autowired
 	DemarrageRepository demarrageRepository;
 	
+	public Page<Demarrage>getAll( int pageNumber, int pageSize){
+		Pageable page = PageRequest.of(pageNumber, pageSize);
+		return demarrageRepository.findAll(page);
+	}	
+	
 	public Page<Demarrage>getDemarrageParDate(Date jour, int pageNumber, int pageSize){
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		return demarrageRepository.demarrageParDate(jour, page);
@@ -40,4 +45,5 @@ public class DemarrageService {
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		return demarrageRepository.demarrageDateOF(jour, of, page); 
 	}
+
 }

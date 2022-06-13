@@ -16,6 +16,11 @@ public class ProductionService {
 	@Autowired
 	ProductionRepository productionRepository;
 	
+	public Page<Production> getAll(int pageNumber, int pageSize) {
+		Pageable page = PageRequest.of(pageNumber, pageSize);
+		return productionRepository.findAll(page);
+	}	
+	
 	public Page<Production>getProductionParDate(Date jour, int pageNumber, int pageSize){
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		return productionRepository.productionParDate(jour, page);
@@ -40,4 +45,5 @@ public class ProductionService {
 		Pageable page = PageRequest.of(pageNumber, pageSize);
 		return productionRepository.productionDateOF(jour, of, page);
 	}
+
 }

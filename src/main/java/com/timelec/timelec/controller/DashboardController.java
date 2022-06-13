@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timelec.timelec.models.Dashboard;
-import com.timelec.timelec.models.DashboardExportExcel;
+import com.timelec.timelec.models.excel.DashboardExportExcel;
 import com.timelec.timelec.repository.DashboardRepository;
 import com.timelec.timelec.service.EmailSenderService;
 

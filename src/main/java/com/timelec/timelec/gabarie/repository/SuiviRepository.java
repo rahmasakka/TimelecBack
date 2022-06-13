@@ -1,6 +1,8 @@
 package com.timelec.timelec.gabarie.repository;
 
 import java.sql.Date;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +19,9 @@ public interface SuiviRepository extends JpaRepository<Suivi, Integer>{
 	
 	@Query(value="SELECT * FROM gabarie.suivi where Date >= ?1 and Date <= ?2", nativeQuery = true)
 	Page<Suivi> suivieBetweenTwoDates(Date dateDeb, Date dateFin, Pageable page);
+	
+	@Query(value="SELECT * FROM gabarie.suivi where Date >= ?1 and Date <= ?2", nativeQuery = true)
+	List<Suivi> suivieBetweenTwoDate(Date dateDeb, Date dateFin);
 	
 	@Query(value="SELECT * FROM gabarie.suivi where nom = ?1", nativeQuery = true)
 	Page<Suivi> suivieParMachines(String machine, Pageable page); 

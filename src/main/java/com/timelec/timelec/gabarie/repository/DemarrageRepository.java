@@ -2,6 +2,7 @@ package com.timelec.timelec.gabarie.repository;
 
 import org.springframework.data.domain.Pageable;
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,9 @@ public interface DemarrageRepository extends JpaRepository<Demarrage, Integer>{
 	
 	@Query(value="SELECT * FROM démarrage where Date >= ?1 and Date <= ?2", nativeQuery = true)
 	Page<Demarrage> demarrageBetweenTwoDates(Date dateDeb, Date dateFin,Pageable page);
+	
+	@Query(value="SELECT * FROM démarrage where Date >= ?1 and Date <= ?2", nativeQuery = true)
+	List<Demarrage> demarrageBetweenTwoDate(Date dateDeb, Date dateFin);
 
 	@Query(value="SELECT * FROM démarrage where Date = ?1 and Of = ?2;", nativeQuery = true)
 	Page<Demarrage> demarrageDateOF(Date jour, int of, Pageable page);

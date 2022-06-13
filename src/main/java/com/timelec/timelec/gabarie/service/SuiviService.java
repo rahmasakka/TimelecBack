@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.timelec.timelec.gabarie.model.Suivi;
 import com.timelec.timelec.gabarie.repository.SuiviRepository;
 
@@ -16,6 +15,11 @@ public class SuiviService {
 
 	@Autowired
 	SuiviRepository suiviRepository;
+	
+	public Page<Suivi>getAll( int pageNumber, int pageSize){
+		Pageable page = PageRequest.of(pageNumber, pageSize);
+		return suiviRepository.findAll(page);
+	}	
 	
 	public Page<Suivi> getSuiviParDate(Date jour, int pageNumber, int pageSize){
 		Pageable page = PageRequest.of(pageNumber, pageSize);
