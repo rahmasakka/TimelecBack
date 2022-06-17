@@ -1,6 +1,5 @@
 package com.timelec.timelec.p77.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import com.timelec.timelec.repository.DashboardRepository;
 import com.timelec.timelec.repository.MachineRepository;
 import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
-import com.timelec.timelec.service.EmailSenderService;
 
 @CrossOrigin
 @RestController
@@ -42,8 +40,8 @@ public class ETLP77Controller {
 	@Autowired
 	private MachineRepository machineRepository;
 	
-	@Autowired
-	private EmailSenderService senderService;
+//	@Autowired
+//	private EmailSenderService senderService;
 	
 	public String getTime(long totalSecs) {
 		long heures = (totalSecs / 3600) %24;
@@ -53,15 +51,8 @@ public class ETLP77Controller {
 		
 	}
 	
-	
-	@GetMapping("/test/{nbSeconde}")
-	private String calcul(@PathVariable long nbSeconde) {
-		return getTime(nbSeconde);
-	}
-	
-	
     @GetMapping("/{jour}")
-	private void ETL(@PathVariable LocalDate jour) {   
+	private void ETL(@PathVariable String jour) {   
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
         	long quantiteNonConforme = 0;
@@ -126,6 +117,6 @@ public class ETLP77Controller {
         	}
     		
     	}
-		senderService.sendEmail("rahmasakka3@gmail.com", "iData", "P77 de la date " + jour+ " chargé avec succès");
+		//senderService.sendEmail("rahmasakka3@gmail.com", "iData", "P77 de la date " + jour+ " chargé avec succès");
 	}
 }

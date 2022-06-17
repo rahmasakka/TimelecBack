@@ -1,6 +1,5 @@
 package com.timelec.timelec.fuserbloc.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +50,9 @@ public class ETLFuserblocController {
 		return(heures + ":" + minutes + ":" + seconds);
 		
 	}
-	
-	@GetMapping("/test/{nbSeconde}")
-	private String calcul(@PathVariable long nbSeconde) {
-		return getTime(nbSeconde);
-	}
-	
+
     @GetMapping("/{jour}")
-	private void ETL(@PathVariable LocalDate jour) {   
+	private void ETL(@PathVariable String jour) {   
     	
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {

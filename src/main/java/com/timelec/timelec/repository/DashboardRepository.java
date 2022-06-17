@@ -1,7 +1,6 @@
 package com.timelec.timelec.repository;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +10,7 @@ import com.timelec.timelec.models.Dashboard;
 public interface DashboardRepository extends JpaRepository<Dashboard, Long>{
 
 	@Query(value="SELECT count(*) FROM dashboard where Test_start_time = ?1 and ID_Machine = ?2", nativeQuery = true)
-	int listLigneByDateTester(LocalDate jour, long object);
+	int listLigneByDateTester(String jour, long object);
 	
 	@Query(value="SELECT * FROM dashboard where Test_start_time >= ?1 and Test_start_time <= ?2", nativeQuery = true)
 	List<Dashboard> getDashboardBetween2Days(Date jour1, Date jour2);

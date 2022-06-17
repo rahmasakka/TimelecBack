@@ -1,6 +1,5 @@
 package com.timelec.timelec.vm.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +39,6 @@ public class EtlVm {
 	@Autowired
 	private MachineRepository machineRepository;
 	
-//	@Autowired
-//	private EmailSenderService senderService;
-	
-	
 	public String getTime(long totalSecs) {
 		long heures = (totalSecs / 3600) %24;
 		long minutes = (totalSecs % 3600) / 60;
@@ -53,7 +48,7 @@ public class EtlVm {
 	
 	
     @GetMapping("/{jour}")
-	private void ETL(@PathVariable LocalDate jour) {   
+	private void ETL(@PathVariable String jour) {   
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
         	long quantiteNonConforme = 0;
@@ -119,6 +114,5 @@ public class EtlVm {
         	}
     		
     	}
-		//senderService.sendEmail("rahmasakka3@gmail.com", "iData", "VM de la date " + jour+ " chargé avec succès");
 	}
 }

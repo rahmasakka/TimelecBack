@@ -1,11 +1,11 @@
 package com.timelec.timelec.p87.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,13 +52,8 @@ public class EtlP87 {
 		
 	}
 	
-	@Scheduled(cron ="0 11 11 * * *")
-	public void someJob() throws InterruptedException{
-		LocalDate dateSystem = LocalDate.now();
-		ETL(dateSystem);
-	} 
-	
-	public void ETL(LocalDate jour) { 
+    @GetMapping("/{jour}")
+	private void ETL(@PathVariable String jour) {   
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
         	long quantiteNonConforme = 0;

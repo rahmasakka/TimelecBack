@@ -44,13 +44,14 @@ public class ETLSircroSircoverScheduled {
 		return(heures + ":" + minutes + ":" + seconds);
 	}
 	
-	@Scheduled(cron ="0 35 11 * * *")
+	@Scheduled(cron ="0 58 11 * * *")
 	public void someJob() throws InterruptedException{
 		LocalDate dateSystem = LocalDate.now();
-		ETL(dateSystem);
-	}
-	
-	public void ETL(LocalDate jour) {       	
+		String dateString = dateSystem.toString();
+		ETL(dateString);
+	} 
+
+	public void ETL(String jour) {      	
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
         	long quantiteNonConforme = 0;

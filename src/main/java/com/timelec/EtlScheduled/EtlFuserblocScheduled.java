@@ -52,13 +52,14 @@ public class EtlFuserblocScheduled {
 	}
 	
 	
-	@Scheduled(cron ="0 35 11 * * *")
+	@Scheduled(cron ="0 58 11 * * *")
 	public void someJob() throws InterruptedException{
 		LocalDate dateSystem = LocalDate.now();
-		ETL(dateSystem);
+		String dateString = dateSystem.toString();
+		ETL(dateString);
 	} 
 
-	public void ETL(LocalDate jour) { 
+	public void ETL(String jour) { 
 		//String jour2 = jour.toString(); 
     	
     	List<Machine> listMachine = machineRepository.findAll();
