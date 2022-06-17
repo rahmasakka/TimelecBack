@@ -1,6 +1,6 @@
-/*package com.timelec.timelec.fuserbloc.controller;
+package com.timelec.timelec.fuserbloc.controller;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,8 @@ public class ETLFuserblocController {
 	@Autowired
 	private MachineRepository machineRepository;
 	
+//	@Autowired
+//	private EmailSenderService senderService;
 	
 	public String getTime(long totalSecs) {
 		long heures = (totalSecs / 3600) %24;
@@ -56,7 +58,7 @@ public class ETLFuserblocController {
 	}
 	
     @GetMapping("/{jour}")
-	private void ETL(@PathVariable Date jour) {   
+	private void ETL(@PathVariable LocalDate jour) {   
     	
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
@@ -121,7 +123,7 @@ public class ETLFuserblocController {
 	    	    	dashboardRepository.save(newLigne);
 	    		}
         	}
-    		
     	}
+		//senderService.sendEmail("rahmasakka3@gmail.com", "iData", "P77 de la date " + jour+ " chargé avec succès");
 	}
-}*/
+}

@@ -1,15 +1,16 @@
-/*package com.timelec.timelec.p87.controller;
+package com.timelec.EtlScheduled;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.timelec.timelec.fuserbloc.model.Summary;
+import com.timelec.timelec.fuserbloc.repository.ETLFuserblocRepository;
 import com.timelec.timelec.models.Dashboard;
 import com.timelec.timelec.models.Machine;
 import com.timelec.timelec.models.TesteurEnProduction;
@@ -18,17 +19,15 @@ import com.timelec.timelec.repository.DashboardRepository;
 import com.timelec.timelec.repository.MachineRepository;
 import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
-
-import com.timelec.timelec.p87.model.Summary;
-import com.timelec.timelec.p87.repository.ETLDevP87Repository;
+import com.timelec.timelec.service.EmailSenderService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/devP87/etl")
-public class ETLDevP87Controller {
+@RequestMapping("/api/fuserbloc/etl")
+public class EtlFuserblocScheduled {
 
 	@Autowired
-    private ETLDevP87Repository productionRepository;
+    private ETLFuserblocRepository productionRepository;
 	
 	@Autowired
 	private DashboardRepository dashboardRepository;
@@ -42,32 +41,36 @@ public class ETLDevP87Controller {
 	@Autowired
 	private MachineRepository machineRepository;
 	
+	@Autowired
+	private EmailSenderService senderService;
 	
 	public String getTime(long totalSecs) {
 		long heures = (totalSecs / 3600) %24;
 		long minutes = (totalSecs % 3600) / 60;
 		long seconds = totalSecs % 60;
 		return(heures + ":" + minutes + ":" + seconds);
-		
 	}
 	
 	
-	@GetMapping("/test/{nbSeconde}")
-	private String calcul(@PathVariable long nbSeconde) {
-		return getTime(nbSeconde);
-	}
-	
-	
-    @GetMapping("/{jour}")
-	private void ETL(@PathVariable Date jour) {   
+	@Scheduled(cron ="0 35 11 * * *")
+	public void someJob() throws InterruptedException{
+		LocalDate dateSystem = LocalDate.now();
+		ETL(dateSystem);
+	} 
+
+	public void ETL(LocalDate jour) { 
+		//String jour2 = jour.toString(); 
+    	
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
         	long quantiteNonConforme = 0;
         	long quantiteConforme = 0;	
         	long dureeFonctionnementSeconde = 0;	
         	long dureeDisfonctionnementSeconde = 0;
+        	
         	List<Summary> summaries = productionRepository.listSummarydByDateTester(jour, listMachine.get(tester).getIdMachine());
         	if((dashboardRepository.listLigneByDateTester(jour , listMachine.get(tester).getIdMachine())==0) ) {
+        		
         		if(productionRepository.nbLigneByDateTester(jour, listMachine.get(tester).getIdMachine())!=0) {
     	    		if(summaries.get(0).getTestStatus() == true) 
     	    			quantiteConforme++;
@@ -103,13 +106,14 @@ public class ETLDevP87Controller {
     	    	        	testeurEnRepos.setDuree(getTime(summaries.get(i).getTestStartTime().getTime()));
     	                	testeurEnRepos.setTestStatus(summaries.get(i).getTestStatus());
     	                	testeurEnReposRepository.save(testeurEnRepos);
+
     	                }
     	            }
 	    	    	Dashboard newLigne = new Dashboard();
 	    	    	newLigne.setDate(jour);
 	    	    	newLigne.setDureeDisfonctionnementSeconde(dureeDisfonctionnementSeconde);
 	    	    	newLigne.setDureeFonctionnementSeconde(dureeFonctionnementSeconde);
-	    	    	newLigne.setDatabase("devP87");
+	    	    	newLigne.setDatabase("fuserbloc");
 	    	    	newLigne.setFinishTime(getTime(summaries.get(summaries.size() - 1).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setStartTime(getTime(summaries.get(0).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setQuantiteConforme(quantiteConforme);
@@ -121,5 +125,6 @@ public class ETLDevP87Controller {
 	    		}
         	}
     	}
+		senderService.sendEmail("rahmasakka3@gmail.com", "iData", "Fuserbloc de la date " + jour+ " chargé avec succès");
 	}
-}*/
+}

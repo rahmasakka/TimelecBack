@@ -1,6 +1,6 @@
-/*package com.timelec.timelec.sircoSircover.controller;
+package com.timelec.timelec.sircoSircover.controller;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,13 @@ import com.timelec.timelec.repository.DashboardRepository;
 import com.timelec.timelec.repository.MachineRepository;
 import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
-
 import com.timelec.timelec.sircoSircover.model.Summary;
 import com.timelec.timelec.sircoSircover.repository.ETLSircoSicroverRepository;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/sircoSircover/etl")
-public class ETLSircroSircoverController {
+public class ETLSircroSircover{
 
 	@Autowired
     private ETLSircoSicroverRepository productionRepository;
@@ -42,6 +41,9 @@ public class ETLSircroSircoverController {
 	@Autowired
 	private MachineRepository machineRepository;
 	
+//	@Autowired
+//	private EmailSenderService senderService;
+	
 	
 	public String getTime(long totalSecs) {
 		long heures = (totalSecs / 3600) %24;
@@ -56,7 +58,7 @@ public class ETLSircroSircoverController {
 	}
 	
     @GetMapping("/{jour}")
-	private void ETL(@PathVariable Date jour) {   
+	private void ETL(@PathVariable LocalDate jour) {   
     	
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
@@ -81,9 +83,7 @@ public class ETLSircroSircoverController {
     	        			quantiteNonConforme++;
     	    			int difference = (int) Math.abs(summaries.get(i).getTestStartTime().getTime()- summaries.get(i-1).getTestStartTime().getTime())/ 1000;
     	                if (difference < listMachine.get(tester).getTauxFonctionnement() * 60) {
-        	    			//System.out.print("fonctionnement " +i + "   "+ difference);
     	                	dureeFonctionnementSeconde += difference;
-        	    			//System.out.println("======> somme " + dureeFonctionnementSeconde);
     	                	TesteurEnProduction testeurEnProd = new TesteurEnProduction();
     	                	testeurEnProd.setIdSummary(summaries.get(i).getIdSummary());
     	                	testeurEnProd.setTesterID(listMachine.get(tester));
@@ -95,9 +95,7 @@ public class ETLSircroSircoverController {
     	    	        	testeurEnProductionRepository.save(testeurEnProd);
     	                }
     	                else {
-        	    			//System.out.print("disfonctionnement " +i + "   "+ difference);
     	                	dureeDisfonctionnementSeconde += difference;  
-        	    			//System.out.println("==>somme " + dureeDisfonctionnementSeconde);
     	                	TesteurEnRepos testeurEnRepos = new TesteurEnRepos();
     	                	testeurEnRepos.setIdSummary(summaries.get(i).getIdSummary());
     	                	testeurEnRepos.setTesterID(listMachine.get(tester));
@@ -114,7 +112,7 @@ public class ETLSircroSircoverController {
 	    	    	newLigne.setDate(jour);
 	    	    	newLigne.setDureeDisfonctionnementSeconde(dureeDisfonctionnementSeconde);
 	    	    	newLigne.setDureeFonctionnementSeconde(dureeFonctionnementSeconde);
-	    	    	newLigne.setDatabase("sircoSircover");
+	    	    	newLigne.setDatabase("Sircover");
 	    	    	newLigne.setFinishTime(getTime(summaries.get(summaries.size() - 1).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setStartTime(getTime(summaries.get(0).getTestStartTime().getTime()/1000));
 	    	    	newLigne.setQuantiteConforme(quantiteConforme);
@@ -127,5 +125,6 @@ public class ETLSircroSircoverController {
         	}
     		
     	}
+		//senderService.sendEmail("rahmasakka3@gmail.com", "iData", "Sircover de la date " + jour + " chargé avec succès");
 	}
-}*/
+}

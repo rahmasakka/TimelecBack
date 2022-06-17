@@ -1,5 +1,6 @@
 package com.timelec.timelec.vm.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.timelec.timelec.models.Dashboard;
 import com.timelec.timelec.models.Machine;
 import com.timelec.timelec.models.TesteurEnProduction;
@@ -17,14 +17,13 @@ import com.timelec.timelec.repository.DashboardRepository;
 import com.timelec.timelec.repository.MachineRepository;
 import com.timelec.timelec.repository.TesteurEnProductionRepository;
 import com.timelec.timelec.repository.TesteurEnReposRepository;
-import com.timelec.timelec.service.EmailSenderService;
 import com.timelec.timelec.vm.model.Summary;
 import com.timelec.timelec.vm.repository.ETLVMRepository;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/vm/etl")
-public class ETLResultsVMController {
+public class EtlVm {
 	
 	@Autowired
     private ETLVMRepository productionRepository;
@@ -41,9 +40,8 @@ public class ETLResultsVMController {
 	@Autowired
 	private MachineRepository machineRepository;
 	
-	@Autowired
-	private EmailSenderService senderService;
- 
+//	@Autowired
+//	private EmailSenderService senderService;
 	
 	
 	public String getTime(long totalSecs) {
@@ -54,16 +52,8 @@ public class ETLResultsVMController {
 	}
 	
 	
-	@GetMapping("/test/{nbSeconde}")
-	private String calcul(@PathVariable long nbSeconde) {
-		return getTime(nbSeconde);
-	}
-	public void ETLTest() {  
-		System.out.println("Hello Rahma");
-	}
-   // @GetMapping("/{jour}")
-	public void ETL( String jour) {   
-    	
+    @GetMapping("/{jour}")
+	private void ETL(@PathVariable LocalDate jour) {   
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
         	long quantiteNonConforme = 0;
@@ -129,8 +119,6 @@ public class ETLResultsVMController {
         	}
     		
     	}
-		senderService.sendEmail("rahmasakka3@gmail.com", "iData", "VM de la date " + jour+ " chargé avec succès");
-		System.out.println("Hello Vm Am here in controller");
-
+		//senderService.sendEmail("rahmasakka3@gmail.com", "iData", "VM de la date " + jour+ " chargé avec succès");
 	}
 }

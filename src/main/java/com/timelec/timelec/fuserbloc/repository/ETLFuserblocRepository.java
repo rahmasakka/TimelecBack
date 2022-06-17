@@ -1,6 +1,6 @@
 package com.timelec.timelec.fuserbloc.repository;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -15,16 +15,10 @@ public interface ETLFuserblocRepository extends CrudRepository<Summary, Long>{
 
 	@Query(value="select *"
 			   + "from table_summary where Convert(Test_start_time, date) = ?1 and Tester_ID = ?2", nativeQuery = true)
-	public List<Summary> listSummarydByDateTester(Date jour, int testerID);
+	public List<Summary> listSummarydByDateTester(LocalDate jour, int testerID);
 	
 	
 	@Query(value="select count(*)"
 			   + "from table_summary where Convert(Test_start_time, date) = ?1 and Tester_ID = ?2", nativeQuery = true)
-	public int nbLignedByDateTester(Date jour, int testerID);	
-	
-	
-	@Query(value="select count(*)"
-			   + "from table_summary where Convert(Test_start_time, date) = ?1 and Tester_ID = ?2", nativeQuery = true)
-	public int nbLigneByDateTester(Date jour, long tester);
-	
+	public int nbLigneByDateTester(LocalDate jour, long tester);	
 }

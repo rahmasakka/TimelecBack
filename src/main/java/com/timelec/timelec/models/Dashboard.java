@@ -1,6 +1,8 @@
 package com.timelec.timelec.models;
 
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +24,7 @@ public class Dashboard {
 //    @Temporal(TemporalType.DATE)
 //    @JsonFormat(pattern="yyyy-MM-dd", timezone="Europe/Paris")
 	@Column(name="Test_start_time")
-	private String date;	
+	private LocalDate date;	
     
     @ManyToOne
     @JoinColumn(name="ID_Machine")
@@ -62,7 +64,7 @@ public class Dashboard {
 	}
 
 
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
@@ -122,7 +124,7 @@ public class Dashboard {
 	}
 
 
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -176,7 +178,7 @@ public class Dashboard {
 		this.finishTime = finishTime;
 	}
 
-	public Dashboard(Long id, String date, Machine testeurId, long quantiteConforme, long quantiteNonConforme,
+	public Dashboard(Long id, LocalDate date, Machine testeurId, long quantiteConforme, long quantiteNonConforme,
 			long dureeFonctionnementSeconde, long dureeDisfonctionnementSeconde, String dureeFonctionnement,
 			String dureeDisfonctionnement, String database, String startTime, String finishTime) {
 		super();
