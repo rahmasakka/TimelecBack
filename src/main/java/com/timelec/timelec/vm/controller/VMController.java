@@ -19,7 +19,6 @@ import com.timelec.timelec.vm.service.ResultsVMService;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/vm")
-
 public class VMController {
 	
     @Autowired

@@ -58,9 +58,11 @@ public class ETLResultsVMController {
 	private String calcul(@PathVariable long nbSeconde) {
 		return getTime(nbSeconde);
 	}
-	
-    @GetMapping("/{jour}")
-	public void ETL(@PathVariable String jour) {   
+	public void ETLTest() {  
+		System.out.println("Hello Rahma");
+	}
+   // @GetMapping("/{jour}")
+	public void ETL( String jour) {   
     	
     	List<Machine> listMachine = machineRepository.findAll();
     	for (int tester = 0; tester< listMachine.size(); tester++) {
@@ -128,6 +130,7 @@ public class ETLResultsVMController {
     		
     	}
 		senderService.sendEmail("rahmasakka3@gmail.com", "iData", "VM de la date " + jour+ " chargé avec succès");
+		System.out.println("Hello Vm Am here in controller");
 
 	}
 }
